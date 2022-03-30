@@ -9,6 +9,12 @@
 # include <string.h>
 # include <errno.h>
 
+typedef struct s_data
+{
+	struct s_stack *first;
+	struct s_stack *last;
+}		t_data;
+
 typedef struct s_stack
 {
 	int				num;
@@ -17,5 +23,6 @@ typedef struct s_stack
 }		t_stack;
 
 long	ft_atol(const char *str);
+void	ft_putnbr_fd(int n, int fd);
 
 #endif
