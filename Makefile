@@ -1,6 +1,5 @@
-SRCS		= srcs/push_swap.c
-#LIB			= pipelib/ft_strjoin.c pipelib/ft_strlen.c pipelib/ft_substr.c pipelib/ft_freetab.c
-#LIB			:= $(LIB) pipelib/ft_strchr_replace.c pipelib/ft_split.c pipelib/ft_strchr.c pipelib/ft_printnbr.c
+SRCS		= srcs/push_swap.c srcs/mklst.c
+LIB			= Libft/ft_atol.c Libft/ft_putnbr.c
 HEADER		= include/push_swap.h
 RM			= rm -rf
 NAME		= push_swap

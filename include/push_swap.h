@@ -24,5 +24,8 @@ typedef struct s_stack
 
 long	ft_atol(const char *str);
 void	ft_putnbr_fd(int n, int fd);
+t_stack	*mkstacklink(void);
+t_data	mkstacka(int argc, char **argv);
+int		checkarg(char *str);
 
 #endif
