@@ -12,10 +12,10 @@
 
 #include "../include/push_swap.h"
 
-int	checkdup(t_stack stacka)
+int	checkdup(t_link *stacka)
 {
 	int		i;
-	t_stack	stacknext;
+	t_link	*stacknext;
 
 	i = 0;
 	while (stacka)
@@ -61,9 +61,9 @@ int	checkarg(char *str)
 	return (1);
 }
 
-void	ft_printstacks(t_stack *stacka, t_stack *stackb)
+void	ft_printstacks(t_link *stacka, t_link *stackb)
 {
-	while (stacka || stackb)
+	while (stacka)
 	{
 		if (stacka)
 		{
@@ -78,13 +78,15 @@ void	ft_printstacks(t_stack *stacka, t_stack *stackb)
 		}
 		write (1, "\n", 1);
 	}
+	write (1, "\n", 1);
 }
-/*
-int	issort(t_stack stack)
+
+int	issort(t_link *stack)
 {
 	int	tmp;
 
 	tmp = stack->num;
+	stack = stack->next;
 	while (stack)
 	{
 		if (tmp > stack->num)
@@ -94,10 +96,23 @@ int	issort(t_stack stack)
 	}
 	return(1);
 }
-*/
-void	push_swap(t_data stacka)
+
+void	push_swap(int argc, t_data stacka, t_data stackb)
 {
-	ft_printstacks(stacka.first);
+	ft_printstacks(stacka.first, stackb.first);
+	if (argc <= 6)
+	{
+		printf ("il y a 5 int ou  moins\n");
+	}
+	//ope_swap(&stacka);
+	//ope_rotate(&stacka);
+	//ope_revrotate(&stacka);
+	ope_push(&stacka, &stackb);
+	ft_printstacks(stacka.first, stackb.first);
+	if (issort(stacka.first) == 1)
+		printf ("stack is sorted!\n");
+	else 
+		printf ("stack isn't sorted\n");
 }
 
 int	main(int argc, char **argv)
@@ -108,12 +123,13 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 		return (0);
 	stacka = mkstacka(argc, argv);
-	stackb = mkdata();
+	stackb.first = NULL;
+	stackb.last = NULL;
 	if (checkdup(stacka.first) == -1)
 	{
-		//problem;
-		printf("dup found\n");
+		//delete stacks
+		printf("!!duplicate int found!!\n");
 	}
-	push_swap(stacka);
+	push_swap(argc, stacka, stackb);
 	return (0);
 }

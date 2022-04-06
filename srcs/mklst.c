@@ -1,21 +1,21 @@
 #include "../include/push_swap.h"
 
-void	forgelink(t_stack *prev, t_stack *now)
+void	forgelink(t_link *prev, t_link *now)
 {
 	prev->next = now;
 	now->prev = prev;
 }
 
-t_stack	*mkstacklink(void)
+t_link	*mkstacklink(void)
 {
-	t_stack *stack;
+	t_link *link;
 
-	stack = malloc(sizeof(t_stack));
-	if (!stack)
+	link = malloc(sizeof(t_link));
+	if (!link)
 		return (NULL);
-	stack->next = NULL;
-	stack->prev = NULL;
-	return (stack);
+	link->next = NULL;
+	link->prev = NULL;
+	return (link);
 }
 
 t_data mkdata(void)
@@ -34,8 +34,8 @@ t_data	mkstacka(int argc, char **argv)
 {
 	int	i;
 	t_data	stacka;
-	t_stack	*prevlink;
-	t_stack	*nowlink;
+	t_link	*prevlink;
+	t_link	*nowlink;
 
 	stacka = mkdata();
 	prevlink = stacka.first;

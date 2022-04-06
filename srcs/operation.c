@@ -2,25 +2,66 @@
 
 void	ope_swap(t_data *datastack)
 {
+	t_link	*link1;
+	t_link	*link2;
 
+	link1 = datastack->first;
+	link2 = link1->next;
 
+	datastack->first = link2;
+	link2->prev = NULL;
+	link1->prev = link2;
+	link1->next = link2->next;
+	link2->next = link1;
 }
 
 void	ope_rotate(t_data *datastack)
 {
+	t_link	*link1;
+	t_link	*link2;
 
+	link1 = datastack->first;
+	link2 = datastack->last;
 
+	datastack->first = link1->next;
+	datastack->last = link1;
+
+	datastack->first->prev = NULL;
+	link1->next = NULL;
+	link2->next = link1;
+	link1->prev = link2;
 }
 
 void	ope_revrotate(t_data *datastack)
 {
+	t_link	*link1;
+	t_link	*link2;
 
+	link1 = datastack->first;
+	link2 = datastack->last;
 
+	datastack->last = link2->prev;
+	datastack->last->next = NULL;
+	datastack->first = link2;
+	link2->prev = NULL;
+	link2->next = link1;
+	link1->prev = link2;
 }
 
-void	ope_push(t_data stackgiver, t_data stackreceiver)
+void	ope_push(t_data *stackgiver, t_data *stackreceiver)
 {
+	t_link *link;
 
-
-	
+	link = stackgiver->first;
+	stackgiver->first = link->next;
+	if (stackgiver->first)
+		stackgiver->first->prev = NULL;
+	if (!stackgiver->last->prev)
+		stackgiver->last = NULL;
+	link->next = stackreceiver->first;
+	if (stackreceiver->first)
+		stackreceiver->first->prev = link;
+	stackreceiver->first = link;
+	if (!stackreceiver->last)
+		stackreceiver->last = link;	
 }
