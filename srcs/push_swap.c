@@ -61,15 +61,23 @@ int	checkarg(char *str)
 	return (1);
 }
 
-void	ft_printstacks(t_stack *stacka)
+void	ft_printstacks(t_stack *stacka, t_stack *stackb)
 {
-	while (stacka)
+	while (stacka || stackb)
 	{
-		ft_putnbr_fd(stacka->num, 1);
+		if (stacka)
+		{
+			ft_putnbr_fd(stacka->num, 1);
+			stacka = stacka->next;
+		}
+		write (1, " | ", 3);
+		if (stackb)
+		{
+			ft_putnbr_fd(stackb->num, 1);
+			stackb = stackb->next;
+		}
 		write (1, "\n", 1);
-		stacka = stacka->next;
 	}
-
 }
 /*
 int	issort(t_stack stack)
@@ -95,10 +103,12 @@ void	push_swap(t_data stacka)
 int	main(int argc, char **argv)
 {
 	t_data stacka;
+	t_data stackb;
 
 	if (argc == 1)
 		return (0);
 	stacka = mkstacka(argc, argv);
+	stackb = mkdata();
 	if (checkdup(stacka.first) == -1)
 	{
 		//problem;
