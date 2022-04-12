@@ -41,6 +41,7 @@ int		checkarg(char *str);
 t_data	mkdata(void);
 
 /*algo.c*/
+void	algo_100(int argc, t_data *stacka, t_data *stackb);
 void	algo_5(int argc, t_data *stacka, t_data *stackb);
 void	algo_3(t_data *stacka);
 

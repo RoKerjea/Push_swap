@@ -55,9 +55,12 @@ void	algo_5(int argc, t_data *stacka, t_data *stackb)
 		ope_pb(stacka, stackb);
 	algo_3(stacka);
 	pushlinkrightplace(stacka, stackb);
-	printf ("were are inside algo 5 before taking last link from stackb\n");
-	ft_printstacks(stacka->first, stackb->first);
-	ft_printstacksrev(stacka->last, stackb->last);
 	if (stackb->first != NULL)
 		pushlinkrightplace(stacka, stackb);
+}
+
+void	algo_100(int argc, t_data *stacka, t_data *stackb)
+{
+
+	
 }

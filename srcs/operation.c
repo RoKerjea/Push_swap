@@ -67,16 +67,17 @@ void	ope_push(t_data *stackgiver, t_data *stackreceiver)
 	t_link *link;
 
 	link = stackgiver->first;
+	if (stackgiver->last == stackgiver->first)
+		stackgiver->last = NULL;
 	stackgiver->first = link->next;
 	if (stackgiver->first)
 		stackgiver->first->prev = NULL;
-	if (!stackgiver->last->prev)
-		stackgiver->last = NULL;
+
+
+	
 	link->next = stackreceiver->first;
 	if (stackreceiver->first)
 		stackreceiver->first->prev = link;
-
-		
 	stackreceiver->first = link;
 	if (!stackreceiver->last)
 		stackreceiver->last = link;	

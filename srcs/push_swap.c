@@ -124,21 +124,17 @@ void	push_swap(int argc, t_data stacka, t_data stackb)
 	ft_printstacks(stacka.first, stackb.first);
 	ft_printstacksrev(stacka.last, stackb.last);
 	if (argc == 3 && issort(stacka.first) != 1)
-		ope_ra(&stacka);/*
+		ope_ra(&stacka);
 	if (argc == 4 && issort(stacka.first) != 1)
 		algo_3(&stacka);
 	if (argc > 4 && argc <= 6 && issort(stacka.first) != 1)
-	{
 		algo_5(argc, &stacka, &stackb);
-	}*/
+	if (argc > 6 && argc <= 101)
+		algo_100(argc, &stacka, &stackb);
 	//ope_sa (&stacka);
 	//ope_rra (&stacka);
-	//ope_swap(&stacka);
-	//ope_rotate(&stacka);
-	//ope_revrotate(&stacka);
-	ope_pb(&stacka, &stackb);
-	ope_pb(&stacka, &stackb);
-	ope_pa(&stacka, &stackb);
+	//ope_pb(&stacka, &stackb);
+	//ope_pa(&stacka, &stackb);
 	ft_printstacks(stacka.first, stackb.first);
 	ft_printstacksrev(stacka.last, stackb.last);
 	if (issort(stacka.first) == 1 && stackb.first == NULL)
