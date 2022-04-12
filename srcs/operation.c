@@ -1,13 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   operation.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rokerjea <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/12 17:28:50 by rokerjea          #+#    #+#             */
+/*   Updated: 2022/04/12 17:28:52 by rokerjea         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/push_swap.h"
 
 void	ope_swap(t_data *datastack)
 {
 	t_link	*link1;
 	t_link	*link2;
+	t_link	*link3;
 
 	link1 = datastack->first;
 	link2 = link1->next;
-
+	link3 = link2->next;
+	link3->prev = link1;
 	datastack->first = link2;
 	link2->prev = NULL;
 	link1->prev = link2;
@@ -61,6 +75,8 @@ void	ope_push(t_data *stackgiver, t_data *stackreceiver)
 	link->next = stackreceiver->first;
 	if (stackreceiver->first)
 		stackreceiver->first->prev = link;
+
+		
 	stackreceiver->first = link;
 	if (!stackreceiver->last)
 		stackreceiver->last = link;	

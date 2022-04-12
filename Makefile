@@ -1,4 +1,5 @@
-SRCS		= srcs/push_swap.c srcs/mklst.c srcs/operation.c
+SRCS		= srcs/push_swap.c srcs/mklst.c srcs/operation.c srcs/algo.c
+SRCS		:= $(SRCS) srcs/double_ope.c srcs/named_ope1.c srcs/named_ope2.c
 LIB			= Libft/ft_atol.c Libft/ft_putnbr.c
 HEADER		= include/push_swap.h
 RM			= rm -rf

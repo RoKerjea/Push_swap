@@ -63,6 +63,7 @@ int	checkarg(char *str)
 
 void	ft_printstacks(t_link *stacka, t_link *stackb)
 {
+	write (1, "stacks first to last\n", 21);
 	while (stacka)
 	{
 		if (stacka)
@@ -75,6 +76,27 @@ void	ft_printstacks(t_link *stacka, t_link *stackb)
 		{
 			ft_putnbr_fd(stackb->num, 1);
 			stackb = stackb->next;
+		}
+		write (1, "\n", 1);
+	}
+	write (1, "\n", 1);
+}
+
+void	ft_printstacksrev(t_link *stacka, t_link *stackb)
+{
+	write (1, "stacks last to first\n", 21);
+	while (stacka)
+	{
+		if (stacka)
+		{
+			ft_putnbr_fd(stacka->num, 1);
+			stacka = stacka->prev;
+		}
+		write (1, " | ", 3);
+		if (stackb)
+		{
+			ft_putnbr_fd(stackb->num, 1);
+			stackb = stackb->prev;
 		}
 		write (1, "\n", 1);
 	}
@@ -100,16 +122,26 @@ int	issort(t_link *stack)
 void	push_swap(int argc, t_data stacka, t_data stackb)
 {
 	ft_printstacks(stacka.first, stackb.first);
-	if (argc <= 6)
+	ft_printstacksrev(stacka.last, stackb.last);
+	if (argc == 3 && issort(stacka.first) != 1)
+		ope_ra(&stacka);/*
+	if (argc == 4 && issort(stacka.first) != 1)
+		algo_3(&stacka);
+	if (argc > 4 && argc <= 6 && issort(stacka.first) != 1)
 	{
-		printf ("il y a 5 int ou  moins\n");
-	}
+		algo_5(argc, &stacka, &stackb);
+	}*/
+	//ope_sa (&stacka);
+	//ope_rra (&stacka);
 	//ope_swap(&stacka);
 	//ope_rotate(&stacka);
 	//ope_revrotate(&stacka);
-	ope_push(&stacka, &stackb);
+	ope_pb(&stacka, &stackb);
+	ope_pb(&stacka, &stackb);
+	ope_pa(&stacka, &stackb);
 	ft_printstacks(stacka.first, stackb.first);
-	if (issort(stacka.first) == 1)
+	ft_printstacksrev(stacka.last, stackb.last);
+	if (issort(stacka.first) == 1 && stackb.first == NULL)
 		printf ("stack is sorted!\n");
 	else 
 		printf ("stack isn't sorted\n");
@@ -128,7 +160,7 @@ int	main(int argc, char **argv)
 	if (checkdup(stacka.first) == -1)
 	{
 		//delete stacks
-		printf("!!duplicate int found!!\n");
+		printf("!!duplicate is found!!\n");
 	}
 	push_swap(argc, stacka, stackb);
 	return (0);
