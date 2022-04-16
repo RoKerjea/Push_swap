@@ -153,10 +153,12 @@ int	main(int argc, char **argv)
 	stacka = mkstacka(argc, argv);
 	stackb.first = NULL;
 	stackb.last = NULL;
+	stackb.count = 0;
 	if (checkdup(stacka.first) == -1)
 	{
-		//delete stacks
-		printf("!!duplicate is found!!\n");
+		sprintf("Error!!duplicate is found!!\n");
+		//free all
+		exit();
 	}
 	push_swap(argc, stacka, stackb);
 	return (0);

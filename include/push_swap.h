@@ -11,8 +11,9 @@
 
 typedef struct s_data
 {
-	struct s_link *first;
-	struct s_link *last;
+	int				count;
+	struct s_link	*first;
+	struct s_link	*last;
 }		t_data;
 
 typedef struct s_link
@@ -41,6 +42,7 @@ int		checkarg(char *str);
 t_data	mkdata(void);
 
 /*algo.c*/
+
 void	algo_100(int argc, t_data *stacka, t_data *stackb);
 void	algo_5(int argc, t_data *stacka, t_data *stackb);
 void	algo_3(t_data *stacka);

@@ -70,6 +70,7 @@ t_data	mkstacka(int argc, char **argv)
 		i++;
 		prevlink = prevlink->next;
 	}
+	stacka.count = argc;
 	stacka.last = nowlink;
 	return (stacka);
 }
