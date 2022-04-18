@@ -64,7 +64,7 @@ int	checkarg(char *str)
 void	ft_printstacks(t_link *stacka, t_link *stackb)
 {
 	write (1, "stacks first to last\n", 21);
-	while (stacka)
+	while (stacka || stackb)
 	{
 		if (stacka)
 		{
@@ -85,7 +85,7 @@ void	ft_printstacks(t_link *stacka, t_link *stackb)
 void	ft_printstacksrev(t_link *stacka, t_link *stackb)
 {
 	write (1, "stacks last to first\n", 21);
-	while (stacka)
+	while (stacka || stackb)
 	{
 		if (stacka)
 		{
@@ -103,18 +103,34 @@ void	ft_printstacksrev(t_link *stacka, t_link *stackb)
 	write (1, "\n", 1);
 }
 
-int	issort(t_link *stack)
+int	issort(t_link *link)
 {
 	int	tmp;
 
-	tmp = stack->num;
-	stack = stack->next;
-	while (stack)
+	tmp = link->num;
+	link = link->next;
+	while (link)
 	{
-		if (tmp > stack->num)
+		if (tmp > link->num)
 			return (-1);
-		tmp = stack->num;
-		stack = stack->next;
+		tmp = link->num;
+		link = link->next;
+	}
+	return(1);
+}
+
+int	issortrev(t_link *link)
+{
+	int	tmp;
+
+	tmp = link->num;
+	link = link->prev;
+	while (link)
+	{
+		if (tmp > link->num)
+			return (-1);
+		tmp = link->num;
+		link = link->prev;
 	}
 	return(1);
 }
@@ -122,7 +138,7 @@ int	issort(t_link *stack)
 void	push_swap(int argc, t_data stacka, t_data stackb)
 {
 	ft_printstacks(stacka.first, stackb.first);
-	ft_printstacksrev(stacka.last, stackb.last);
+	//ft_printstacksrev(stacka.last, stackb.last);
 	if (argc == 3 && issort(stacka.first) != 1)
 		ope_ra(&stacka);
 	if (argc == 4 && issort(stacka.first) != 1)
@@ -130,13 +146,14 @@ void	push_swap(int argc, t_data stacka, t_data stackb)
 	if (argc > 4 && argc <= 6 && issort(stacka.first) != 1)
 		algo_5(argc, &stacka, &stackb);
 	if (argc > 6 && argc <= 101)
-		algo_100(argc, &stacka, &stackb);
+		algo_100(&stacka, &stackb);
 	//ope_sa (&stacka);
 	//ope_rra (&stacka);
 	//ope_pb(&stacka, &stackb);
-	//ope_pa(&stacka, &stackb);
-	ft_printstacks(stacka.first, stackb.first);
-	ft_printstacksrev(stacka.last, stackb.last);
+	//ope_pb(&stacka, &stackb);
+	//ope_rb(&stackb);
+	//ft_printstacks(stacka.first, stackb.first);
+	//ft_printstacksrev(stacka.last, stackb.last);
 	if (issort(stacka.first) == 1 && stackb.first == NULL)
 		printf ("stack is sorted!\n");
 	else 
@@ -156,10 +173,11 @@ int	main(int argc, char **argv)
 	stackb.count = 0;
 	if (checkdup(stacka.first) == -1)
 	{
-		sprintf("Error!!duplicate is found!!\n");
+		printf("Error!!duplicate is found!!\n");
 		//free all
-		exit();
+		exit(0);
 	}
 	push_swap(argc, stacka, stackb);
+	//freeeverything
 	return (0);
 }

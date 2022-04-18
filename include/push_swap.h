@@ -11,7 +11,7 @@
 
 typedef struct s_data
 {
-	int				count;
+	unsigned int	count;
 	struct s_link	*first;
 	struct s_link	*last;
 }		t_data;
@@ -31,6 +31,7 @@ void	ft_putnbr_fd(int n, int fd);
 /*push_swap.c*/
 
 int		issort(t_link *stack);
+int		issortrev(t_link *stack);
 void	ft_printstacks(t_link *stacka, t_link *stackb);
 void	ft_printstacksrev(t_link *stacka, t_link *stackb);
 
@@ -43,7 +44,7 @@ t_data	mkdata(void);
 
 /*algo.c*/
 
-void	algo_100(int argc, t_data *stacka, t_data *stackb);
+void	algo_100(t_data *stacka, t_data *stackb);
 void	algo_5(int argc, t_data *stacka, t_data *stackb);
 void	algo_3(t_data *stacka);
 

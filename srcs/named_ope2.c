@@ -14,14 +14,20 @@
 
 void	ope_ra(t_data *stacka)
 {
-	ope_rotate(stacka);
-	write(1, "ra\n", 3);
+	if (stacka->first != stacka->last)
+	{
+		ope_rotate(stacka);
+		write(1, "ra\n", 3);
+	}
 }
 
 void	ope_rb(t_data *stackb)
 {
-	ope_rotate(stackb);
-	write(1, "rb\n", 3);
+	if (stackb->first != stackb->last)
+	{
+		ope_rotate(stackb);
+		write(1, "rb\n", 3);
+	}
 }
 
 void	ope_rra(t_data *stacka)

@@ -37,7 +37,7 @@ t_data mkdata(void)
 	//datastack = malloc(sizeof(t_data));
 	/*if (!datastack)
 		return (NULL);*/
-	datastack.first = mkstacklink();
+	datastack.first = NULL;
 	datastack.last = NULL;
 	return (datastack);
 }
@@ -50,6 +50,7 @@ t_data	mkstacka(int argc, char **argv)
 	t_link	*nowlink;
 
 	stacka = mkdata();
+	stacka.first = mkstacklink();
 	prevlink = stacka.first;
 	if (checkarg(argv[1]) == 1)
 	prevlink->num =  ft_atol(argv[1]);
@@ -70,7 +71,7 @@ t_data	mkstacka(int argc, char **argv)
 		i++;
 		prevlink = prevlink->next;
 	}
-	stacka.count = argc;
+	stacka.count = i - 1;
 	stacka.last = nowlink;
 	return (stacka);
 }
