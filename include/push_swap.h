@@ -23,6 +23,13 @@ typedef struct s_link
 	struct s_link	*prev;
 }		t_link;
 
+typedef struct s_tabint
+{
+	unsigned int	count;
+	int				*tab;
+}		t_tabint;
+
+
 /*LIB*/
 
 long	ft_atol(const char *str);
@@ -37,20 +44,23 @@ void	ft_freetab(char **tab);
 
 int		issort(t_link *stack);
 int		issortrev(t_link *stack);
+
+/*printforcheck  TO_DELETE*/
 void	ft_printstacks(t_link *stacka, t_link *stackb);
 void	ft_printstacksrev(t_link *stacka, t_link *stackb);
+void	printtab(t_tabint tabint);
 
 /*mklst*/
 
-t_link	*mkstacklink(void);
-t_data	mkstacka(int argc, char **argv);
+//t_link	*mkstacklink(void);
+t_data	mkstacka(t_tabint tabint);
 //int		checkarg(char *str);
 t_data	mkdata(void);
 
 /*algo.c*/
 
 void	algo_100(t_data *stacka, t_data *stackb);
-void	algo_5(int argc, t_data *stacka, t_data *stackb);
+void	algo_5(t_data *stacka, t_data *stackb);
 void	algo_3(t_data *stacka);
 
 /* operation.c*/
@@ -82,6 +92,6 @@ void	ope_rrr(t_data *stacka, t_data *stackb);
 
 /*parsing.c*/
 
-int	*make_tab_from_input(int argc, char **argv);
+t_tabint	make_tab_from_input(int argc, char **argv);
 
 #endif

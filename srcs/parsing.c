@@ -1,17 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rokerjea <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/19 17:31:24 by rokerjea          #+#    #+#             */
+/*   Updated: 2022/04/19 17:31:26 by rokerjea         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/push_swap.h"
 
-int	checkdup(int *tabint)
+int	checkdup(t_tabint tabint)
 {
-	int	i;
-	int j;
+	unsigned int	i;
+	unsigned int	j;
 
 	i = 0;
-	while (tabint[i])
+	while (i < tabint.count)
 	{
 		j = i + 1;
-		while (tabint[j])
+		while (j < tabint.count)
 		{
-			if (tabint[i] == tabint[j])
+			if (tabint.tab[i] == tabint.tab[j])
 				return (-1);
 			j++;
 		}
@@ -50,14 +62,13 @@ int	checkarg(char *str)
 
 char	*join_input(int argc, char **argv)
 {
-	printf("gate join\n");
 	char	*lineres;
 	char	*tmp;
-	int	i;
+	int		i;
 
 	lineres = " ";
-	i = 2;
-	while (i < argc - 1 && lineres)
+	i = 1;
+	while (i < argc && lineres)
 	{
 		tmp = ft_strjoin(lineres, argv[i]);
 		if (ft_strlen(lineres) > 1)
@@ -66,49 +77,61 @@ char	*join_input(int argc, char **argv)
 			return (NULL);
 		lineres = ft_strjoin(tmp, " ");
 		free (tmp);
+		i++;
 	}
-	return(lineres);
+	//printf("joined line =\'%s\'\n", lineres);
+	return (lineres);
 }
 
-int	*atol_table(char **table)
+t_tabint	atol_table(char **table)
 {
-	int *tabint;
-	int i;
+	t_tabint		tabint;
+	unsigned int	i;
 
-	while(table[i])
-		i++;
-	tabint = malloc(sizeof(int) * i);
-	while (i > 0)
+	tabint.count = 0;
+	while (table[tabint.count])
+		tabint.count++;
+	tabint.tab = malloc(sizeof(int) * tabint.count);
+	if (tabint.tab == NULL)
+		return (tabint);
+	i = 0;
+	while (i < tabint.count)
 	{
 		if (checkarg(table[i]) == 1)
-			tabint[i] = ft_atol(table[i]);
-		i--;
+		{
+			tabint.tab[i] = ft_atol(table[i]);
+			//printf("int number %d is %d\n", i, tabint.tab[i]);
+		}
+		else
+			write (2, "Error\n", 6);
+		i++;
 	}
+	//printf("end of atolconv\n");
 	return (tabint);
 }
 
-int	*make_tab_from_input(int argc, char **argv)
+t_tabint	make_tab_from_input(int argc, char **argv)
 {
-	printf("gate tab main\n");
-	int		*tabres;
-	char	*line;
-	char	**chartab;
+	t_tabint	tabres;
+	char		*line;
+	char		**chartab;
 
+	tabres.tab = NULL;
 	line = join_input(argc, argv);
-	printf("gate join done\n");
 	if (line == NULL)
-		return (NULL);
+		return (tabres);
 	chartab = ft_split(line, ' ');
 	free (line);
 	if (chartab == NULL)
-		return (NULL);
+		return (tabres);
 	tabres = atol_table(chartab);
 	ft_freetab(chartab);
-	if (checkdup(tabres) == 1)
+	if (checkdup(tabres) == -1)
 	{
-		printf("Error!duplicate found\n");
-		free(tabres);
-		return (NULL);
+		write(2, "Error\n", 6);
+		free(tabres.tab);
+		tabres.tab = NULL;
+		return (tabres);
 	}
-	return(tabres);
+	return (tabres);
 }

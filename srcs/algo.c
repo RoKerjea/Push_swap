@@ -48,11 +48,11 @@ void	pushlinkrightplace(t_data *stacka, t_data *stackb)
 		ope_ra(stacka);
 }
 
-void	algo_5(int argc, t_data *stacka, t_data *stackb)
+void	algo_5(t_data *stacka, t_data *stackb)
 {
-	ope_pb(stacka, stackb);
-	if (argc == 6)
+	if (stacka->count == 6)
 		ope_pb(stacka, stackb);
+	ope_pb(stacka, stackb);
 	algo_3(stacka);
 	pushlinkrightplace(stacka, stackb);
 	if (stackb->first != NULL)
@@ -61,13 +61,13 @@ void	algo_5(int argc, t_data *stacka, t_data *stackb)
 
 void	sorttab3(int *tab)
 {
-	int temp;
-	int i;
+	int	temp;
+	int	i;
 
 	while (tab[0] > tab[1] || tab[0] > tab[2] || tab[1] > tab[2])
 	{
 		i = 0;
-		while (i <= 2)
+		while (i < 2)
 		{
 			if (tab[i] > tab[i + 1] && i < 2)
 			{
@@ -81,12 +81,14 @@ void	sorttab3(int *tab)
 	printf("int in tab of 3 after sort are : %d %d %d\n", tab[0], tab[1], tab[2]);
 }
 
-int	find_median_of_3(t_link *link, int chunksize)
+int	find_median_of_3(t_link *link, unsigned int chunksize)
 {
-	int	*tab;
-	int	i;
+	int				*tab;
+	unsigned int	i;
 
 	i = 0;
+	if (chunksize < 3)
+		return (2147483647);
 	tab = malloc(sizeof(int) * 3);
 	tab[0] = link->num;
 	while (i < chunksize)
@@ -105,7 +107,7 @@ int	find_median_of_3(t_link *link, int chunksize)
 	return (i);
 }
 
-int biggerintinstack(int median,  t_data *stack)
+int	biggerintinstack(int median, t_data *stack)
 {
 	t_link	*link;
 
@@ -113,13 +115,13 @@ int biggerintinstack(int median,  t_data *stack)
 	while (link != NULL)
 	{
 		if (link->num > median)
-			return(1);
+			return (1);
 		link = link->next;
 	}
-	return(0);
+	return (0);
 }
 
-int smallerintinstack(int median,  t_data *stack)
+int	smallerintinstack(int median, t_data *stack)
 {
 	t_link	*link;
 
@@ -127,69 +129,108 @@ int smallerintinstack(int median,  t_data *stack)
 	while (link != NULL)
 	{
 		if (link->num < median)
-			return(1);
+			return (1);
 		link = link->next;
 	}
-	return(0);
+	return (0);
 }
 
-void	push_smaller_mediana(t_data *stackgiver, t_data *stackreceiver, int chunksize)
+unsigned int	push_smaller_mediana(t_data *stackgiver, t_data *stackreceiver, unsigned int chunksize)
 {
-	printf("gate media\n");
-	int median;
+	unsigned int	res;
+	int				median;
 
 	median = find_median_of_3(stackgiver->first, chunksize);
-	printf("mediana of actual chunk is :%d\n", median);
-
-	ft_printstacks(stackgiver->first, stackreceiver->first);
+	//printf("mediana of actual chunk is :%d\n", median);
+	res = 0;
+	//ft_printstacks(stackgiver->first, stackreceiver->first);
 	while (smallerintinstack(median, stackgiver))
 	{
 		if (stackgiver->first->num < median)
+		{
+			res++;
 			ope_pb(stackgiver, stackreceiver);
+		}
 		else if (stackgiver->last->num < median)
 			ope_rra(stackgiver);
 		else
 			ope_ra(stackgiver);
-		chunksize--;
 	}
-	printf("gate end of media\n");
+	//printf("gate end of media, chunksize for b = %u\n", res);
+	return (res);
 }
 
-void	push_bigger_medianb(t_data *stackgiver, t_data *stackreceiver, int chunksize)
+void	push_bigger_medianb(t_data *stackgiver, t_data *stackreceiver, unsigned int chunksize)
 {
-	printf("gate medib\n");
-	int median;
+	int	median;
+	int rotcount;
 
+	rotcount = 0;
+
+	//printf("chunksieze = %d\n", chunksize);
 	median = find_median_of_3(stackgiver->first, chunksize);
-	printf("medianb of actual chunk is :%d\n", median);
+	//printf("medianb of actual chunk is :%d\n", median);
+	if (chunksize == 1)
+	{
+		ope_pa(stackreceiver, stackgiver);
+		chunksize--;
+	}
+	else if (chunksize == 2)
+	{
+		if (stackgiver->first->num > stackgiver->first->next->num)
+		{
+			ope_pa(stackreceiver, stackgiver);
+			ope_pa(stackreceiver, stackgiver);
+		}
+		else
+		{
+			ope_sb(stackgiver);
+			ope_pa(stackreceiver, stackgiver);
+			ope_pa(stackreceiver, stackgiver);
+		}
+		chunksize = 0;
+	}
 	while (biggerintinstack(median, stackgiver))
 	{
 		if (stackgiver->first->num > median)
+		{
 			ope_pa(stackreceiver, stackgiver);
-		else if (stackgiver->last->num > median)
-			ope_rrb(stackgiver);
+			chunksize--;
+		}
 		else
+		{
 			ope_rb(stackgiver);
-		chunksize--;
+			rotcount++;
+		}
 	}
-	printf("gate end of medib\n");
+	while (rotcount)
+	{
+		ope_rrb(stackgiver);
+		rotcount--;
+	}
+	if (chunksize > 0)
+	{
+		printf("chunk left = %u\n", chunksize);
+		push_bigger_medianb(stackgiver, stackreceiver, chunksize);
+	}
+	//printf("gate end of medib\n");
 }
 
 void	quicksort(t_data *stacka, t_data *stackb)
 {
-	int chunksize;
+	unsigned int	chunksize;
 
-	chunksize = stacka->count / 2;
-	printf("stackacount = %d\n", stacka->count);
+	chunksize = stackb->count;
+	//printf("stackacount = %d\n", stacka->count);
 	if (issort(stacka->first) != 1)
-		push_smaller_mediana(stacka, stackb, stacka->count);
+		chunksize = push_smaller_mediana(stacka, stackb, stacka->count);
 	if (stacka->count > 3 && issort(stacka->first) != 1)
 		quicksort(stacka, stackb);
 	else if (stacka->count == 3)
 		algo_3(stacka);
 	else if (stacka->count == 2 && issort(stacka->first) != 1)
 		ope_ra(stacka);
-	ft_printstacks(stacka->first, stackb->first);
+	//ft_printstacks(stacka->first, stackb->first);
 	if (issortrev(stackb->last) == 1)
 		while (stackb->first)
 			ope_pa(stacka, stackb);
@@ -206,5 +247,9 @@ void	algo_100(t_data *stacka, t_data *stackb)
 		quicksort(stacka, stackb);
 		printf("One complete quicksort cycle has been done\n");
 		ft_printstacks(stacka->first, stackb->first);
-	}
+	}/*
+	while (stacka->count > 1)
+	{
+		push_smaller_mediana(stacka, stackb, stacka->count);
+	}*/
 }
