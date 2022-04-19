@@ -27,6 +27,11 @@ typedef struct s_link
 
 long	ft_atol(const char *str);
 void	ft_putnbr_fd(int n, int fd);
+char	**ft_split(char const *s, char c);
+unsigned long	ft_strlen(const char *s);
+char	*ft_strdup(const char *s1);
+char	*ft_strjoin(char const *s1, char const *s2);
+void	ft_freetab(char **tab);
 
 /*push_swap.c*/
 
@@ -39,7 +44,7 @@ void	ft_printstacksrev(t_link *stacka, t_link *stackb);
 
 t_link	*mkstacklink(void);
 t_data	mkstacka(int argc, char **argv);
-int		checkarg(char *str);
+//int		checkarg(char *str);
 t_data	mkdata(void);
 
 /*algo.c*/
@@ -74,5 +79,9 @@ void	ope_rrb(t_data *stackb);
 void	ope_ss(t_data *stacka, t_data *stackb);
 void	ope_rr(t_data *stacka, t_data *stackb);
 void	ope_rrr(t_data *stacka, t_data *stackb);
+
+/*parsing.c*/
+
+int	*make_tab_from_input(int argc, char **argv);
 
 #endif

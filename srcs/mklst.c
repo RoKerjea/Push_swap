@@ -52,8 +52,8 @@ t_data	mkstacka(int argc, char **argv)
 	stacka = mkdata();
 	stacka.first = mkstacklink();
 	prevlink = stacka.first;
-	if (checkarg(argv[1]) == 1)
-	prevlink->num =  ft_atol(argv[1]);
+	//if (checkarg(argv[1]) == 1)
+	prevlink->num = ft_atol(argv[1]);
 	/*else
 		return (NULL);*/
 	i = 2;
@@ -62,7 +62,7 @@ t_data	mkstacka(int argc, char **argv)
 		nowlink = mkstacklink();
 		/*if (!nowlink)
 			return (NULL);*/
-		if (checkarg(argv[i]) == 1)
+		//if (checkarg(argv[i]) == 1)
 			nowlink->num = ft_atol(argv[i]);
 		/*else
 			return (NULL);*/

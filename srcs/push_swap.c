@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
-
+/*
 int	checkdup(t_link *stacka)
 {
 	int		i;
@@ -60,7 +60,7 @@ int	checkarg(char *str)
 	}
 	return (1);
 }
-
+*/
 void	ft_printstacks(t_link *stacka, t_link *stackb)
 {
 	write (1, "stacks first to last\n", 21);
@@ -160,24 +160,40 @@ void	push_swap(int argc, t_data stacka, t_data stackb)
 		printf ("stack isn't sorted\n");
 }
 
+void	printtab(int *tabint)
+{
+	int i;
+
+	i = 0;
+	printf ("printing *int\n");
+	while (tabint[i])
+	{
+		printf("%d\n", tabint[i]);
+		i++;
+	}
+	exit(0);
+}
+
 int	main(int argc, char **argv)
 {
-	t_data stacka;
-	t_data stackb;
+	t_data	stack[2];
+	int		*tabint;
 
 	if (argc == 1)
 		return (0);
-	stacka = mkstacka(argc, argv);
-	stackb.first = NULL;
-	stackb.last = NULL;
-	stackb.count = 0;
-	if (checkdup(stacka.first) == -1)
+	tabint = make_tab_from_input(argc, argv);
+	printtab(tabint);
+	stack[0] = mkstacka(argc, argv);
+	stack[1].first = NULL;
+	stack[1].last = NULL;
+	stack[1].count = 0;
+/*	if (checkdup(stack[0].first) == -1)
 	{
 		printf("Error!!duplicate is found!!\n");
 		//free all
-		exit(0);
-	}
-	push_swap(argc, stacka, stackb);
+		return(0);
+	}*/
+	push_swap(argc, stack[0], stack[1]);
 	//freeeverything
 	return (0);
 }
