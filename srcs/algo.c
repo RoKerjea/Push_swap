@@ -141,7 +141,7 @@ unsigned int	push_smaller_mediana(t_data *stackgiver, t_data *stackreceiver, uns
 	int				median;
 
 	median = find_median_of_3(stackgiver->first, chunksize);
-	//printf("mediana of actual chunk is :%d\n", median);
+	printf("mediana of actual chunk is :%d\n", median);
 	res = 0;
 	//ft_printstacks(stackgiver->first, stackreceiver->first);
 	while (smallerintinstack(median, stackgiver))
@@ -156,7 +156,7 @@ unsigned int	push_smaller_mediana(t_data *stackgiver, t_data *stackreceiver, uns
 		else
 			ope_ra(stackgiver);
 	}
-	//printf("gate end of media, chunksize for b = %u\n", res);
+	printf("gate end of media, chunksize for b = %u\n", res);
 	return (res);
 }
 
@@ -241,15 +241,25 @@ void	quicksort(t_data *stacka, t_data *stackb)
 }
 
 void	algo_100(t_data *stacka, t_data *stackb)
-{
+{/*
 	while (issort(stacka->first) != 1 || stackb->first != NULL)
 	{
 		quicksort(stacka, stackb);
 		printf("One complete quicksort cycle has been done\n");
 		ft_printstacks(stacka->first, stackb->first);
-	}/*
-	while (stacka->count > 1)
-	{
-		push_smaller_mediana(stacka, stackb, stacka->count);
 	}*/
+	unsigned int	chunk;
+	while (issort(stacka->first) != 1)
+	{
+		if (stacka->count == 2)
+			ope_ra(stacka);
+		if (stacka->count == 3)
+			algo_3(stacka);
+		if (stacka->count > 3)
+		{
+			chunk = push_smaller_mediana(stacka, stackb, stacka->count);
+			printf("chunksize sent = %d\n", chunk);
+		}
+		ft_printstacks(stacka->first, stackb->first);
+	}
 }
