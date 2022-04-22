@@ -30,6 +30,8 @@ int	issort(t_link *link)
 
 int	issortrev(t_link *link)
 {
+	if (link == NULL)
+		return (-1);
 	int	tmp;
 
 	tmp = link->num;
@@ -54,14 +56,14 @@ void	push_swap(t_data *stacka, t_data *stackb)
 		algo_3(stacka);
 	if (stacka->count >= 4 && stacka->count <= 5 && issort(stacka->first) != 1)
 		algo_5(stacka, stackb);
-	if (stacka->count >= 6 && stacka->count <= 101)
+	if (stacka->count >= 6)
 		algo_100(stacka, stackb);
 	//ope_sa (&stacka);
 	//ope_rra (&stacka);
 	//ope_pb(&stacka, &stackb);
 	//ope_pb(&stacka, &stackb);
 	//ope_rb(&stackb);
-	ft_printstacks(stacka->first, stackb->first);
+	//ft_printstacks(stacka->first, stackb->first);
 	//ft_printstacksrev(stacka->last, stackb->last);
 	if (issort(stacka->first) == 1 && stackb->first == NULL)
 		printf ("stack is sorted!\n");

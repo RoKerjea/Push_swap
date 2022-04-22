@@ -29,6 +29,13 @@ typedef struct s_tabint
 	int				*tab;
 }		t_tabint;
 
+typedef struct s_median
+{
+	int a;
+	int b;
+}		t_median;
+
+
 
 /*LIB*/
 
@@ -93,5 +100,9 @@ void	ope_rrr(t_data *stacka, t_data *stackb);
 /*parsing.c*/
 
 t_tabint	make_tab_from_input(int argc, char **argv);
+
+/*median.c*/
+
+int	findmedianofchunk(t_link *link, unsigned int chunksize);
 
 #endif

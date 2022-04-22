@@ -1,4 +1,4 @@
-SRCS		= srcs/push_swap.c srcs/mklst.c srcs/operation.c srcs/algo.c srcs/parsing.c
+SRCS		= srcs/push_swap.c srcs/mklst.c srcs/operation.c srcs/algo.c srcs/parsing.c srcs/median.c
 SRCS		:= $(SRCS) srcs/double_ope.c srcs/named_ope1.c srcs/named_ope2.c srcs/printforcheck.c
 LIB			= Libft/ft_atol.c Libft/ft_putnbr.c Libft/ft_split.c Libft/ft_strdup.c Libft/ft_strlen.c Libft/ft_freetab.c Libft/ft_strjoin.c
 HEADER		= include/push_swap.h
