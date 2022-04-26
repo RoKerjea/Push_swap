@@ -37,6 +37,7 @@ t_data	mkdata(void)
 	datastack.first = NULL;
 	datastack.last = NULL;
 	datastack.count = 0;
+	datastack.name = 'b';
 	return (datastack);
 }
 
@@ -48,6 +49,7 @@ t_data	mkstacka(t_tabint tabint)
 	t_link			*nowlink;
 
 	stacka = mkdata();
+	stacka.name = 'a';
 	stacka.first = mkstacklink();
 	//if (!stacka.first)
 	prevlink = stacka.first;

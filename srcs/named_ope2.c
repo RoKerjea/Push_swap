@@ -12,6 +12,26 @@
 
 #include "../include/push_swap.h"
 
+void	named_ope_rotate(t_data stack)
+{
+	if (stack->name == 'a')
+	{
+		if (stack->first != stack->last)
+		{
+			ope_rotate(stack);
+			write(1, "ra\n", 3);
+		}
+	}
+	else
+	{
+		if (stack->first != stack->last)
+		{
+			ope_rotate(stack);
+			write(1, "rb\n", 3);
+		}
+	}
+}
+
 void	ope_ra(t_data *stacka)
 {
 	if (stacka->first != stacka->last)
@@ -27,6 +47,26 @@ void	ope_rb(t_data *stackb)
 	{
 		ope_rotate(stackb);
 		write(1, "rb\n", 3);
+	}
+}
+
+void	named_ope_revrotate(t_data stack)
+{
+	if (stack->name == 'a')
+	{
+		if (stack->first != stack->last)
+		{
+			ope_revrotate(stack);
+			write(1, "rra\n", 4);
+		}
+	}
+	else
+	{
+		if (stack->first != stack->last)
+		{
+			ope_revrotate(stack);
+			write(1, "rrb\n", 4);
+		}
 	}
 }
 

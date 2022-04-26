@@ -300,3 +300,28 @@ void	algo_100(t_data *stacka, t_data *stackb)
 	int med = findmedianofchunk(stacka->first, stacka->count);
 	printf ("median is =%d\n", med);*/
 }
+/*quicksort pseudocode
+get stack
+find median
+separate < median to other stack
+(get new median to determine if to sent to top or bottom of stack)
+repeat until stacka size == 3 or 2,sort if not sorted, end of recursion
+!!only two stacks
+so
+keep track of chunksizes!!
+return sorted chunk to other stack? but when?
+start by lowest number?
+
+full to b cycle
+median =
+if >= median
+ra
+else 
+if < quartian
+pb
+rb
+if >= quartian
+pb
+repeat with rest of stacka if stacka not sorted
+
+from b to a?

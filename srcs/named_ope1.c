@@ -12,6 +12,26 @@
 
 #include "../include/push_swap.h"
 
+void	named_ope_swap(t_data stack)
+{
+	if (stack->name == 'a')
+	{
+		if (stack->first != NULL && stack->first != stacka->last)
+		{
+			ope_swap(stack);
+			write (1, "sa\n", 3);
+		}
+	}
+	else
+	{
+		if (stack->first != NULL && stack->first != stack->last)
+		{
+			ope_swap(stack);
+			write (1, "sb\n", 3);
+		}
+	}
+}
+
 void	ope_sa(t_data *stacka)
 {
 	if (stacka->first != NULL && stacka->first != stacka->last)
@@ -27,6 +47,26 @@ void	ope_sb(t_data *stackb)
 	{
 		ope_swap(stackb);
 		write (1, "sb\n", 3);
+	}
+}
+
+void	named_ope_push(t_data stackgiver, t_data stackreceiver)
+{
+	if (stackreceiver->name == 'a')
+	{
+		if (stackgiver->first != NULL)
+		{
+			ope_push(stackgiver, stackreceiver);
+			write (1, "pa\n", 3);
+		}
+	}
+	else
+	{
+		if (stackgiver->first != NULL)
+		{
+			ope_push(stackgiver, stackreceiver);
+			write (1, "pb\n", 3);
+		}
 	}
 }
 

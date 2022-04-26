@@ -12,6 +12,7 @@
 typedef struct s_data
 {
 	unsigned int	count;
+	char			name;
 	struct s_link	*first;
 	struct s_link	*last;
 }		t_data;
