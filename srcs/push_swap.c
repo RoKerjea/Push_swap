@@ -30,12 +30,13 @@ void	push_swap(t_data *stacka, t_data *stackb)
 	//ope_pb(&stacka, &stackb);
 	//ope_pb(&stacka, &stackb);
 	//ope_rb(&stackb);
-	ft_printstacks(stacka, stackb);
+	//ft_printstacks(stacka, stackb);
 	//ft_printstacksrev(stacka->last, stackb->last);
+	/*
 	if (issort(stacka->first, 0) == 1 && stackb->first == NULL)
 		printf ("stack is sorted!\n");
 	else
-		printf ("stack isn't sorted\n");
+		printf ("stack isn't sorted\n");*/
 }
 
 void	freestack(t_data *stacka)

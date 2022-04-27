@@ -71,7 +71,7 @@ void	pushlinkrightplace(t_data *stacka, t_data *stackb)
 	while (stackb->first->num > stacka->first->num && stackb->first->num < stacka->last->num)
 		ope_ra(stacka);
 	ope_pa(stacka, stackb);
-	if (issort(stacka->first) != 1)
+	if (issort(stacka->first, stacka->count) != 1)
 		ope_ra(stacka);
 }
 
@@ -254,7 +254,7 @@ void	quicksort(t_data *stacka, t_data *stackb)
 	unsigned int	chunksize;
 
 	chunksize = stackb->count;
-	if (issort(stacka->first) != 1)
+	if (issort(stacka->first, stacka->count) != 1)
 	{
 		if (stacka->count == 2)
 			ope_ra(stacka);
@@ -267,10 +267,10 @@ void	quicksort(t_data *stacka, t_data *stackb)
 		}
 		//ft_printstacks(stacka->first, stackb->first);
 	}
-	if (issort(stacka->first) != 1)
+	if (issort(stacka->first, stacka->count) != 1)
 		quicksort(stacka, stackb);
 	//ft_printstacks(stacka->first, stackb->first);
-	if (issortrev(stackb->last) != 1)
+	if (issortrev(stackb->last, stackb->count) != 1)
 	{
 		if (stackb->count == 2)
 			ope_rb(stackb);
@@ -280,7 +280,7 @@ void	quicksort(t_data *stacka, t_data *stackb)
 			push_bigger_medianb(stackb, stacka, chunksize);
 		//ft_printstacks(stacka->first, stackb->first);
 	}
-	if (issortrev(stackb->last) == 1)
+	if (issortrev(stackb->last, stackb->count) == 1)
 	{
 		while (stackb->count > 0)
 			ope_pa(stacka, stackb);
@@ -289,7 +289,7 @@ void	quicksort(t_data *stacka, t_data *stackb)
 
 void	algo_100(t_data *stacka, t_data *stackb)
 {
-	while (issort(stacka->first) != 1)
+	while (issort(stacka->first, stacka->count) != 1)
 	{
 		quicksort(stacka, stackb);
 		//printf("One complete quicksort cycle has been done\n");
