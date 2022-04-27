@@ -48,13 +48,14 @@ char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	ft_freetab(char **tab);
 
-/*push_swap.c*/
+/*sorted.c*/
 
-int		issort(t_link *stack);
-int		issortrev(t_link *stack);
+int		isstacksort(t_data *stack, unsigned int size);
+int		issort(t_link *link, unsigned int size);
+int		issortrev(t_link *link, unsigned int size);
 
 /*printforcheck  TO_DELETE*/
-void	ft_printstacks(t_link *stacka, t_link *stackb);
+void	ft_printstacks(t_data *stackone, t_data *stacktwo);
 void	ft_printstacksrev(t_link *stacka, t_link *stackb);
 void	printtab(t_tabint tabint);
 
@@ -70,6 +71,7 @@ t_data	mkdata(void);
 void	algo_100(t_data *stacka, t_data *stackb);
 void	algo_5(t_data *stacka, t_data *stackb);
 void	algo_3(t_data *stacka);
+int		smallerintinstack(int median, t_data *stack);
 
 /* operation.c*/
 
@@ -80,6 +82,9 @@ void	ope_push(t_data *stackgiver, t_data *stackreceiver);
 
 /*named_ope1.c*/
 
+
+void	named_ope_swap(t_data *stack);
+void	named_ope_push(t_data *stackgiver, t_data *stackreceiver);
 void	ope_sa(t_data *stacka);
 void	ope_sb(t_data *stackb);
 void	ope_pa(t_data *stacka, t_data *stackb);
@@ -87,8 +92,11 @@ void	ope_pb(t_data *stacka, t_data *stackb);
 
 /*named_ope2.c*/
 
+
+void	named_ope_rotate(t_data *stack);
 void	ope_ra(t_data *stacka);
 void	ope_rb(t_data *stackb);
+void	named_ope_revrotate(t_data *stack);
 void	ope_rra(t_data *stacka);
 void	ope_rrb(t_data *stackb);
 
@@ -105,5 +113,9 @@ t_tabint	make_tab_from_input(int argc, char **argv);
 /*median.c*/
 
 int	findmedianofchunk(t_link *link, unsigned int chunksize);
+int	findquartianofchunk(t_link *link, unsigned int chunksize);
+
+
+void	double_pi_quicksort(t_data *stackgiver, t_data *stackreceiver, unsigned int chunksize);
 
 #endif

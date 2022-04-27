@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sorted.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rokerjea <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/27 12:40:27 by rokerjea          #+#    #+#             */
+/*   Updated: 2022/04/27 12:40:29 by rokerjea         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/push_swap.h"
 
-int	issatcksort(t_data stack, unsigned int size)
+int	isstacksort(t_data *stack, unsigned int size)
 {
-	if (stack.name == 'a')
+	if (stack->name == 'a')
 		return (issort(stack->first, size));
-	if (stack.name == 'b')
-		return (issortrev(stack->first, size));
+	if (stack->name == 'b')
+		return (issortrev(stack->last, size));
 	return (-1);
 }
 
@@ -15,7 +27,7 @@ int	issort(t_link *link, unsigned int size)
 
 	tmp = link->num;
 	link = link->next;
-	while (--size)
+	while (--size && link)
 	{
 		if (tmp > link->num)
 			return (-1);
@@ -33,7 +45,7 @@ int	issortrev(t_link *link, unsigned int size)
 
 	tmp = link->num;
 	link = link->prev;
-	while (--size)
+	while (--size && link)
 	{
 		if (tmp > link->num)
 			return (-1);

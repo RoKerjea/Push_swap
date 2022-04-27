@@ -12,11 +12,11 @@
 
 #include "../include/push_swap.h"
 
-void	named_ope_swap(t_data stack)
+void	named_ope_swap(t_data *stack)
 {
 	if (stack->name == 'a')
 	{
-		if (stack->first != NULL && stack->first != stacka->last)
+		if (stack->first != NULL && stack->first != stack->last)
 		{
 			ope_swap(stack);
 			write (1, "sa\n", 3);
@@ -50,7 +50,7 @@ void	ope_sb(t_data *stackb)
 	}
 }
 
-void	named_ope_push(t_data stackgiver, t_data stackreceiver)
+void	named_ope_push(t_data *stackgiver, t_data *stackreceiver)
 {
 	if (stackreceiver->name == 'a')
 	{

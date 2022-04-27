@@ -12,7 +12,7 @@
 
 #include "../include/push_swap.h"
 
-void	named_ope_rotate(t_data stack)
+void	named_ope_rotate(t_data *stack)
 {
 	if (stack->name == 'a')
 	{
@@ -50,7 +50,7 @@ void	ope_rb(t_data *stackb)
 	}
 }
 
-void	named_ope_revrotate(t_data stack)
+void	named_ope_revrotate(t_data *stack)
 {
 	if (stack->name == 'a')
 	{

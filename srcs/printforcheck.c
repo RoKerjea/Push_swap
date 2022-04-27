@@ -1,7 +1,20 @@
 #include "../include/push_swap.h"
 
-void	ft_printstacks(t_link *stacka, t_link *stackb)
+void	ft_printstacks(t_data *stackone, t_data *stacktwo)
 {
+	t_link *stacka;
+	t_link *stackb;
+
+	if (stackone->name == 'a')
+	{
+		stacka = stackone->first;
+		stackb = stacktwo->first;
+	}
+	else
+	{
+		stacka = stacktwo->first;
+		stackb = stackone->first;
+	}
 	write (1, "stacks first to last\n", 21);
 	while (stacka || stackb)
 	{

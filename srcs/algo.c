@@ -324,4 +324,4 @@ if >= quartian
 pb
 repeat with rest of stacka if stacka not sorted
 
-from b to a?
+from b to a?*/

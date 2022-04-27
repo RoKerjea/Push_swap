@@ -88,7 +88,6 @@ int	oddevenmedian(int *tab, unsigned int chunksize)
 		return ((res.b + res.a) / 2);
 }
 
-
 int	findmedianofchunk(t_link *link, unsigned int chunksize)
 {
 	int				*tab;
@@ -105,6 +104,38 @@ int	findmedianofchunk(t_link *link, unsigned int chunksize)
 		i++;
 	}
 	res = oddevenmedian(tab, i);
+	free(tab);
+	return (res);
+}
+
+int	oddevenquartian(int *tab, unsigned int chunksize)
+{
+	t_median	res;
+
+	res.a = -1;
+	res.b = -1;
+	mediancycle(tab, 0, chunksize - 1, chunksize / 4, &res);
+	if (chunksize % 2 == 1)
+		return (res.b);
+	else
+		return ((res.b + res.a) / 2);
+}
+
+int	findquartianofchunk(t_link *link, unsigned int chunksize)
+{
+	int				*tab;
+	int				res;
+	unsigned int	i;
+
+	i = 0;
+	tab = malloc(sizeof(int) * chunksize);
+	while (i < chunksize)
+	{
+		tab[i] = link->num;
+		link = link->next;
+		i++;
+	}
+	res = oddevenquartian(tab, i);
 	free(tab);
 	return (res);
 }
