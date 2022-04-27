@@ -48,13 +48,18 @@ t_median	push_to_other_stack(t_data *stackgiver, t_data *stackreceiver, unsigned
 			{
 				nextchunk.b++;
 				named_ope_push(stackgiver, stackreceiver);
+				if (stackreceiver->name == 'a' && stackreceiver->first != stackreceiver->last)
+				{
+					j++;
+					named_ope_rotate(stackreceiver);
+				}
 				//ft_printstacks(stackgiver, stackreceiver);			
 			}
 			else if (stackgiver->first->num > lowquartian)//superior quart to bottom of other stack
 			{
 				nextchunk.a++;
 				named_ope_push(stackgiver, stackreceiver);
-				if (stackreceiver->first != stackreceiver->last)
+				if (stackreceiver->first != stackreceiver->last && stackreceiver->name == 'b')
 				{
 					j++;
 					named_ope_rotate(stackreceiver);
@@ -69,10 +74,9 @@ t_median	push_to_other_stack(t_data *stackgiver, t_data *stackreceiver, unsigned
 		while (i--)
 			named_ope_revrotate(stackgiver);
 	}
-	while (j > 0)
+	while (j--)
 	{
 		named_ope_revrotate(stackreceiver);//get sup quart to top of stack, to keep sorted
-		j--;
 	}
 	if (nextchunk.a + nextchunk.b == 2 && isstacksort(stackreceiver, 2) != 1)
 		named_ope_swap(stackreceiver);
@@ -110,7 +114,6 @@ void	double_pi_quicksort(t_data *stackgiver, t_data *stackreceiver, unsigned int
 	nextchunk.b = 0;
 	if (chunksize == 1 || chunksize == 0)
 	{
-		printf("wtf?\n");
 		return;	
 	}
 	if (chunksize == 2)

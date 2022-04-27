@@ -32,8 +32,8 @@ typedef struct s_tabint
 
 typedef struct s_median
 {
-	unsigned int a;
-	unsigned int b;
+	int a;
+	int b;
 }		t_median;
 
 
