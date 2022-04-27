@@ -14,6 +14,8 @@
 
 int	isstacksort(t_data *stack, unsigned int size)
 {
+	if (size == 0 || size == 1)
+		return (1);
 	//printf("de quoi?size = %u name = %c\n", size, stack->name);
 	if (stack->name == 'a')
 		return (issort(stack->first, size));
