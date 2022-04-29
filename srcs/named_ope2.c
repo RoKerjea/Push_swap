@@ -14,6 +14,8 @@
 
 void	named_ope_rotate(t_data *stack)
 {
+	if (stack->count < 2)
+		printf("error rotate\n");
 	if (stack->name == 'a')
 	{
 		if (stack->first != stack->last)
@@ -52,6 +54,8 @@ void	ope_rb(t_data *stackb)
 
 void	named_ope_revrotate(t_data *stack)
 {
+	if (stack->count < 2)
+		printf("error revrotate\n");
 	if (stack->name == 'a')
 	{
 		if (stack->first != stack->last)

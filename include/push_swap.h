@@ -117,5 +117,6 @@ int	findquartianofchunk(t_link *link, unsigned int chunksize);
 
 
 void	double_pi_quicksort(t_data *stackgiver, t_data *stackreceiver, unsigned int chunksize);
+void	single_pi_quicksort(t_data *stackgiver, t_data *stackreceiver, unsigned int chunksize);
 
 #endif

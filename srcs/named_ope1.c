@@ -14,6 +14,8 @@
 
 void	named_ope_swap(t_data *stack)
 {
+	if (stack->count < 2)
+		printf("error swap\n");
 	if (stack->name == 'a')
 	{
 		if (stack->first != NULL && stack->first != stack->last)
