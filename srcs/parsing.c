@@ -103,7 +103,12 @@ t_tabint	atol_table(char **table)
 			//printf("int number %d is %d\n", i, tabint.tab[i]);
 		}
 		else
+		{
 			write (2, "Error\n", 6);
+			ft_freetab(table);
+			free(tabint.tab);
+			exit (0);
+		}
 		i++;
 	}
 	//printf("end of atolconv\n");

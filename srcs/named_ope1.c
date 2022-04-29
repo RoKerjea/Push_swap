@@ -14,42 +14,24 @@
 
 void	named_ope_swap(t_data *stack)
 {
-/*	if (stack->count < 2)
-		printf("error swap\n");*/
-	if (stack->name == 'a')
+	if (stack->count > 1)
 	{
-		if (stack->first != NULL && stack->first != stack->last)
-		{
-			ope_swap(stack);
+		ope_swap(stack);
+		if (stack->name == 'a')
 			write (1, "sa\n", 3);
-		}
-	}
-	else
-	{
-		if (stack->first != NULL && stack->first != stack->last)
-		{
-			ope_swap(stack);
+		else
 			write (1, "sb\n", 3);
-		}
 	}
 }
 
 void	named_ope_push(t_data *stackgiver, t_data *stackreceiver)
 {
-	if (stackreceiver->name == 'a')
+	if (stackgiver->count > 0)
 	{
-		if (stackgiver->first != NULL)
-		{
-			ope_push(stackgiver, stackreceiver);
+		ope_push(stackgiver, stackreceiver);
+		if (stackreceiver->name == 'a')
 			write (1, "pa\n", 3);
-		}
-	}
-	else
-	{
-		if (stackgiver->first != NULL)
-		{
-			ope_push(stackgiver, stackreceiver);
+		else
 			write (1, "pb\n", 3);
-		}
 	}
 }

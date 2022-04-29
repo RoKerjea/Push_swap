@@ -31,7 +31,6 @@ t_median	push_to_other_stack(t_data *stackgiver, t_data *stackreceiver, unsigned
 	median = findmedianofchunk(stackgiver->first, chunksize);
 	lowquartian = findquartianofchunk(stackgiver->first, chunksize);
 	upquartian = findupquartianofchunk(stackgiver->first, chunksize);
-	//printf ("lowquartian = %d, upquart = %d\n", lowquartian, upquartian);
 	while (smallerintinstack(median, stackgiver) && chunksize && stackgiver->name == 'a')
 	{
 		if (stackgiver->first->num > median && stackgiver->count > 1)
@@ -68,13 +67,13 @@ t_median	push_to_other_stack(t_data *stackgiver, t_data *stackreceiver, unsigned
 	}
 	while (biggerintinstack(median, stackgiver) && chunksize && stackgiver->name == 'b')
 	{
-		if (stackgiver->first->num <= median && stackgiver->count > 1)
+		if (stackgiver->first->num < median && stackgiver->count > 1)
 		{
 			named_ope_rotate(stackgiver);
 			i++;
 		}
 		chunksize--;
-		if (stackgiver->first->num > median)
+		if (stackgiver->first->num >= median)
 		{
 			if (stackgiver->first->num <= upquartian)
 			{
@@ -111,23 +110,14 @@ t_median	push_to_other_stack(t_data *stackgiver, t_data *stackreceiver, unsigned
 		i--;
 		named_ope_revrotate(stackgiver);
 	}
-	while (j)
+	while (j && stackreceiver->count > 1)
 	{
-		j--;
 		named_ope_revrotate(stackreceiver);
+		j--;
 	}
 	return (nextchunk);
 }
-/*
-void	push_sorted_chunk(t_data *stackgiver, t_data *stackreceiver, unsigned int chunksize)
-{
-	while (chunksize)
-	{
-		named_ope_push(stackgiver, stackreceiver);
-		chunksize--;
-	}
-}
-*/
+
 void	lower_med_quicksort(t_data *stackgiver, t_data *stackreceiver, t_median	nextchunk)
 {
 	if (isstacksort(stackreceiver, nextchunk.a) != 1)
@@ -231,15 +221,10 @@ void	double_pi_quicksort(t_data *stackgiver, t_data *stackreceiver, unsigned int
 	if (chunksize == 1 || chunksize == 0)
 		return ;
 	if (chunksize == 2)
-	{
-		if (isstacksort(stackreceiver, 2) != 1)
-			ope_ss(stackgiver, stackreceiver);
-		else
-			named_ope_swap(stackgiver);
-	}
-	if (chunksize == 3 && isstacksort(stackgiver, chunksize) != 1 && stackgiver->name == 'a')
+		named_ope_swap(stackgiver);
+	if (chunksize == 3 && stackgiver->name == 'a' && isstacksort(stackgiver, chunksize) != 1)
 		chunk_of_threea(stackgiver, stackreceiver);
-	if (chunksize == 3 && isstacksort(stackgiver, chunksize) != 1 && stackgiver->name == 'b')
+	if (chunksize == 3 && stackgiver->name == 'b' && isstacksort(stackgiver, chunksize) != 1)
 		chunk_of_threeb(stackgiver, stackreceiver);
 	if (chunksize > 3 && isstacksort(stackgiver, chunksize) != 1)
 		nextchunk = push_to_other_stack(stackgiver, stackreceiver, chunksize);

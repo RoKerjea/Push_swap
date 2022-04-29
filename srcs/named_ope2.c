@@ -14,44 +14,24 @@
 
 void	named_ope_rotate(t_data *stack)
 {
-	/*if (stack->count < 2)
-		printf("error rotate\n");*/
-	if (stack->name == 'a')
+	if (stack->count > 1)
 	{
-		if (stack->first != stack->last)
-		{
-			ope_rotate(stack);
+		ope_rotate(stack);
+		if (stack->name == 'a')
 			write(1, "ra\n", 3);
-		}
-	}
-	else
-	{
-		if (stack->first != stack->last)
-		{
-			ope_rotate(stack);
+		else
 			write(1, "rb\n", 3);
-		}
 	}
 }
 
 void	named_ope_revrotate(t_data *stack)
 {
-	/*if (stack->count < 2)
-		printf("error revrotate\n");*/
-	if (stack->name == 'a')
+	if (stack->count > 1)
 	{
-		if (stack->first != stack->last)
-		{
-			ope_revrotate(stack);
+		ope_revrotate(stack);
+		if (stack->name == 'a')
 			write(1, "rra\n", 4);
-		}
-	}
-	else
-	{
-		if (stack->first != stack->last)
-		{
-			ope_revrotate(stack);
+		else
 			write(1, "rrb\n", 4);
-		}
 	}
 }

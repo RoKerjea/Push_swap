@@ -50,16 +50,13 @@ t_data	mkstacka(t_tabint tabint)
 
 	stacka = mkdata();
 	stacka.name = 'a';
-	stacka.first = mkstacklink();
-	//if (!stacka.first)
+	stacka.first = mkstacklink();//to protect!!
 	prevlink = stacka.first;
 	prevlink->num = tabint.tab[0];
 	i = 1;
 	while (i < tabint.count)
 	{
-		nowlink = mkstacklink();
-		/*if (!nowlink)
-			return (NULL);*/
+		nowlink = mkstacklink();//to protect!!
 		nowlink->num = tabint.tab[i];
 		if (prevlink)
 			forgelink(prevlink, nowlink);
