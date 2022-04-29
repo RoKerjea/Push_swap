@@ -15,11 +15,9 @@
 t_median	push_to_other_stack(t_data *stackgiver, t_data *stackreceiver, unsigned int chunksize)
 {
 	//printf("size = %u, count = %u\n",chunksize, stackgiver->count);
-	int non;
+	int non = 1;
 	if (chunksize - stackgiver->count == 0)
 		non = 0;
-	else
-		non = 1;
 	//printf ("start of push med quart with size of %d\n", chunksize);
 	int median;
 	int	lowquartian;
@@ -88,13 +86,13 @@ t_median	push_to_other_stack(t_data *stackgiver, t_data *stackreceiver, unsigned
 void	push_sorted_chunk(t_data *stackgiver, t_data *stackreceiver, unsigned int chunksize)
 {
 	///printf ("start of push sorted size = %d\n", chunksize);
-	if (isstacksort(stackgiver, chunksize) != 1)
+	/*if (isstacksort(stackgiver, chunksize) != 1)
 	{
 		printf("!!error, chunk of size %u not sorted when pushed back!\n", chunksize);
 		printf("!!should be sent from stack %c to %c\n", stackgiver->name, stackreceiver->name);
 		ft_printstacks(stackgiver, stackreceiver);
 		exit(0);
-	}
+	}*/
 	while (chunksize)
 	{
 		named_ope_push(stackgiver, stackreceiver);
