@@ -14,8 +14,8 @@
 
 void	named_ope_rotate(t_data *stack)
 {
-	if (stack->count < 2)
-		printf("error rotate\n");
+	/*if (stack->count < 2)
+		printf("error rotate\n");*/
 	if (stack->name == 'a')
 	{
 		if (stack->first != stack->last)
@@ -34,28 +34,10 @@ void	named_ope_rotate(t_data *stack)
 	}
 }
 
-void	ope_ra(t_data *stacka)
-{
-	if (stacka->first != stacka->last)
-	{
-		ope_rotate(stacka);
-		write(1, "ra\n", 3);
-	}
-}
-
-void	ope_rb(t_data *stackb)
-{
-	if (stackb->first != stackb->last)
-	{
-		ope_rotate(stackb);
-		write(1, "rb\n", 3);
-	}
-}
-
 void	named_ope_revrotate(t_data *stack)
 {
-	if (stack->count < 2)
-		printf("error revrotate\n");
+	/*if (stack->count < 2)
+		printf("error revrotate\n");*/
 	if (stack->name == 'a')
 	{
 		if (stack->first != stack->last)
@@ -72,16 +54,4 @@ void	named_ope_revrotate(t_data *stack)
 			write(1, "rrb\n", 4);
 		}
 	}
-}
-
-void	ope_rra(t_data *stacka)
-{
-	ope_revrotate(stacka);
-	write(1, "rra\n", 4);
-}
-
-void	ope_rrb(t_data *stackb)
-{
-	ope_revrotate(stackb);
-	write(1, "rrb\n", 4);
 }

@@ -16,7 +16,6 @@ int	isstacksort(t_data *stack, unsigned int size)
 {
 	if (size == 0 || size == 1)
 		return (1);
-	//printf("de quoi?size = %u name = %c\n", size, stack->name);
 	if (stack->name == 'a')
 		return (issort(stack->first, size));
 	if (stack->name == 'b')
@@ -42,10 +41,10 @@ int	issort(t_link *link, unsigned int size)
 
 int	issortrev(t_link *link, unsigned int size)
 {
-	if (link == NULL)
-		return (-1);
 	int	tmp;
 
+	if (link == NULL)
+		return (-1);
 	tmp = link->num;
 	link = link->next;
 	while (--size && link)

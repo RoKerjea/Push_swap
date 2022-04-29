@@ -17,7 +17,7 @@ all:		${NAME}
 %.o: %.c %.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-clean:		
+clean:
 	${RM} ${OBJECTS}
 
 fclean:

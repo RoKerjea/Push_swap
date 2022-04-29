@@ -11,21 +11,9 @@
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
-/*
-void	ft_printstack(t_link *stacka)
-{
-	write (1, "stacks first to last\n", 21);
-	while (stacka)
-	{
-		ft_putnbr_fd(stacka->num, 1);
-		stacka = stacka->next;
-		write (1, "\n", 1);
-	}
-}*/
 
 void	ope_swap(t_data *datastack)
 {
-	//ft_printstack (datastack->first);
 	t_link	*link1;
 	t_link	*link2;
 	t_link	*link3;
@@ -33,11 +21,9 @@ void	ope_swap(t_data *datastack)
 	link1 = datastack->first;
 	link2 = link1->next;
 	link3 = link2->next;
-
 	if (link3)
 		link3->prev = link1;
 	link1->next = link3;
-
 	link2->prev = NULL;
 	link1->prev = link2;
 	link2->next = link1;

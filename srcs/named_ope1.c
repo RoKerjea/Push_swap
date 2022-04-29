@@ -14,8 +14,8 @@
 
 void	named_ope_swap(t_data *stack)
 {
-	if (stack->count < 2)
-		printf("error swap\n");
+/*	if (stack->count < 2)
+		printf("error swap\n");*/
 	if (stack->name == 'a')
 	{
 		if (stack->first != NULL && stack->first != stack->last)
@@ -31,24 +31,6 @@ void	named_ope_swap(t_data *stack)
 			ope_swap(stack);
 			write (1, "sb\n", 3);
 		}
-	}
-}
-
-void	ope_sa(t_data *stacka)
-{
-	if (stacka->first != NULL && stacka->first != stacka->last)
-	{
-		ope_swap(stacka);
-		write (1, "sa\n", 3);
-	}
-}
-
-void	ope_sb(t_data *stackb)
-{
-	if (stackb->first != NULL && stackb->first != stackb->last)
-	{
-		ope_swap(stackb);
-		write (1, "sb\n", 3);
 	}
 }
 
@@ -69,23 +51,5 @@ void	named_ope_push(t_data *stackgiver, t_data *stackreceiver)
 			ope_push(stackgiver, stackreceiver);
 			write (1, "pb\n", 3);
 		}
-	}
-}
-
-void	ope_pa(t_data *stacka, t_data *stackb)
-{
-	if (stackb->first != NULL)
-	{
-		ope_push(stackb, stacka);
-		write (1, "pa\n", 3);
-	}
-}
-
-void	ope_pb(t_data *stacka, t_data *stackb)
-{
-	if (stacka->first != NULL)
-	{
-		ope_push(stacka, stackb);
-		write (1, "pb\n", 3);
 	}
 }
