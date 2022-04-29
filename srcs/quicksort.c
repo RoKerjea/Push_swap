@@ -32,73 +32,90 @@ t_median	push_to_other_stack(t_data *stackgiver, t_data *stackreceiver, unsigned
 	median = findmedianofchunk(stackgiver->first, chunksize);
 	lowquartian = findquartianofchunk(stackgiver->first, chunksize);
 	//printf ("median = %d, quartian = %d\n", median, lowquartian);
-	while (smallerintinstack(median, stackgiver) && chunksize)
+	while (smallerintinstack(median, stackgiver) && chunksize && stackgiver->name == 'a')
 	{
-		if (stackgiver->first->num > median)
+		if (stackgiver->first->num > median && stackgiver->count > 1)
 		{
 			named_ope_rotate(stackgiver);//prob here!!
 			i++;
-			//ft_printstacks(stackgiver, stackreceiver);
 		}
 		if (stackgiver->first->num <= median)
 		{
-			if (stackgiver->first->num <= lowquartian)//inferior quart to top of stack b, bottom of a
+			if (stackgiver->first->num <= lowquartian)//inferior quart to top of stack b before rrb, end in second pos after rrb
 			{
 				nextchunk.b++;
+				named_ope_push(stackgiver, stackreceiver);		
+			}
+			else if (stackgiver->first->num > lowquartian)//superior quart to bottom of stack b before rrb, end in first pos after rrb
+			{
+				nextchunk.a++;
 				named_ope_push(stackgiver, stackreceiver);
-				if (stackreceiver->name == 'a' && stackreceiver->count > 1)
+				j++;
+				if (stackreceiver->count > 1)
+				{
+					named_ope_rotate(stackreceiver);
+				}
+			}
+		}
+		chunksize--;
+	}
+
+	while (smallerintinstack(median, stackgiver) && chunksize && stackgiver->name == 'b')
+	{
+		if (stackgiver->first->num <= median && stackgiver->count > 1)
+		{
+			named_ope_rotate(stackgiver);//prob here!!
+			i++;
+		}
+		if (stackgiver->first->num > median)
+		{
+			if (stackgiver->first->num <= lowquartian)//inferior quart to bottom of a before rra, end in first pos after rra
+			{
+				nextchunk.a++;
+				named_ope_push(stackgiver, stackreceiver);
+				if (stackreceiver->count > 1)
 				{
 					j++;
 					named_ope_rotate(stackreceiver);
 				}
 				//ft_printstacks(stackgiver, stackreceiver);			
 			}
-			else if (stackgiver->first->num > lowquartian)//superior quart to bottom of stack b, top of a
+			else if (stackgiver->first->num > lowquartian)//superior quart to top of a before rra, end in second pos after rra
 			{
-				nextchunk.a++;
+				nextchunk.b++;
 				named_ope_push(stackgiver, stackreceiver);
-				if (stackreceiver->name == 'b' && stackreceiver->count > 1)
-				{
-					j++;
-					named_ope_rotate(stackreceiver);
-				}
 				//ft_printstacks(stackgiver, stackreceiver);
 			}
 		}
 		chunksize--;
 	}
-	if (non)//should be only if rest of chunk different from stack->count, to avoid loss of time in first
+	while (i && j && non && stackgiver->count > 1 && stackreceiver->count > 1)
 	{
-		while (i--)
-			named_ope_revrotate(stackgiver);
+		i--;
+		j--;
+		ope_rrr(stackgiver, stackreceiver);
 	}
-	while (j--)
+	while (non && i && stackgiver->count > 1)
 	{
-		//printf("reverse rotate maybe faulty\n");
+		i--;
+		named_ope_revrotate(stackgiver);
+	}
+	while (j)
+	{
+		j--;
 		named_ope_revrotate(stackreceiver);//get sup quart to top of stack, to keep sorted
+
 	}
-	//if (nextchunk.a + nextchunk.b == 2 && isstacksort(stackreceiver, 2) != 1)
-	//	named_ope_swap(stackreceiver);
-	//printf ("end of push med quart, chunk a = %d, b = %d\n", nextchunk.a, nextchunk.b);
 	return (nextchunk);
 }
 
 void	push_sorted_chunk(t_data *stackgiver, t_data *stackreceiver, unsigned int chunksize)
 {
-	///printf ("start of push sorted size = %d\n", chunksize);
-	/*if (isstacksort(stackgiver, chunksize) != 1)
-	{
-		printf("!!error, chunk of size %u not sorted when pushed back!\n", chunksize);
-		printf("!!should be sent from stack %c to %c\n", stackgiver->name, stackreceiver->name);
-		ft_printstacks(stackgiver, stackreceiver);
-		exit(0);
-	}*/
 	while (chunksize)
 	{
 		named_ope_push(stackgiver, stackreceiver);
 		chunksize--;
 	}
-	//printf ("end of push sorted\n");
 }
 
 /*
@@ -112,46 +129,16 @@ void	push_sorted_chunk(t_data *stackgiver, t_data *stackreceiver, unsigned int c
 */
 void	lower_med_quicksort(t_data *stackgiver, t_data *stackreceiver, t_median	nextchunk)
 {
-	if (stackgiver->name == 'a')
-	{
-		if (nextchunk.a > 1)
-		{
-			double_pi_quicksort(stackreceiver, stackgiver, nextchunk.a);//next quicksort for superior quart		
-		}
-		push_sorted_chunk(stackreceiver, stackgiver, nextchunk.a);
-		printf("end of lowermedquicsrt half, chunk = %u, pushed to %c\n", nextchunk.a, stackgiver->name);
-		//ft_printstacks(stackgiver, stackreceiver);
-		if (nextchunk.b > 1)
-		{
-			double_pi_quicksort(stackreceiver, stackgiver, nextchunk.b);//next quicksort for inferior quart		
-		}
-		push_sorted_chunk(stackreceiver, stackgiver, nextchunk.b);
-		printf("end of lowermedquicsrt half, chunk = %u, pushed to %c\n", nextchunk.b, stackgiver->name);
-		//ft_printstacks(stackgiver, stackreceiver);
-	}
-	if (stackgiver->name == 'b')
-	{
-		if (nextchunk.b > 1)
-		{
-			double_pi_quicksort(stackreceiver, stackgiver, nextchunk.b);//next quicksort for superior quart		
-		}
-		push_sorted_chunk(stackreceiver, stackgiver, nextchunk.b);
-		printf("end of lowermedquicsrt half, chunk = %u, pushed to %c\n", nextchunk.b, stackgiver->name);
-		//ft_printstacks(stackgiver, stackreceiver);
-		if (nextchunk.a > 1)
-		{
-			double_pi_quicksort(stackreceiver, stackgiver, nextchunk.a);//next quicksort for inferior quart		
-		}
-		push_sorted_chunk(stackreceiver, stackgiver, nextchunk.a);
-		printf("end of lowermedquicsrt half, chunk = %u, pushed to %c\n", nextchunk.a, stackgiver->name);
-		//ft_printstacks(stackgiver, stackreceiver);
-	}
-	if (isstacksort(stackgiver, (nextchunk.a + nextchunk.b)) != 1)
+	double_pi_quicksort(stackreceiver, stackgiver, nextchunk.a);//next quicksort for superior quart		
+	push_sorted_chunk(stackreceiver, stackgiver, nextchunk.a);
+	double_pi_quicksort(stackreceiver, stackgiver, nextchunk.b);//next quicksort for inferior quart		
+	push_sorted_chunk(stackreceiver, stackgiver, nextchunk.b);
+	/*if (isstacksort(stackgiver, (nextchunk.a + nextchunk.b)) != 1)
 	{
 		printf("!!error, chunk of size %u not sorted after both lowermedquicsrt!\n", nextchunk.a + nextchunk.b);
 		ft_printstacks(stackgiver, stackreceiver);
 		exit(0);
-	}
+	}*/
 }
 
 //at end of function, chunksize should be sorted
@@ -165,28 +152,23 @@ void	double_pi_quicksort(t_data *stackgiver, t_data *stackreceiver, unsigned int
 	nextchunk.a = 0;
 	nextchunk.b = 0;
 	if (chunksize == 1 || chunksize == 0)
-	{
-		return;	
-	}
+		return;
 	if (chunksize == 2)
 	{
 		if (chunksize == 2 && isstacksort(stackgiver, chunksize) != 1)
 			named_ope_swap(stackgiver);
 		return;
 	}
-	if (chunksize > 2 && isstacksort(stackgiver, chunksize) != 1)
+	if (chunksize >= 2 && isstacksort(stackgiver, chunksize) != 1)
 		nextchunk = push_to_other_stack(stackgiver, stackreceiver, chunksize);
-	if (isstacksort(stackgiver, chunksize -(nextchunk.a + nextchunk.b)) != 1)
-	{
-		//printf ("start of new quicksort with size of %d\n", chunksize -(nextchunk.a + nextchunk.b));
-		double_pi_quicksort(stackgiver, stackreceiver, chunksize -(nextchunk.a + nextchunk.b));//next quicksort for rest of stack
-	}
-	if (isstacksort(stackgiver, chunksize -(nextchunk.a + nextchunk.b)) != 1)
+	if (isstacksort(stackgiver, chunksize - (nextchunk.a + nextchunk.b)) != 1)
+		double_pi_quicksort(stackgiver, stackreceiver, chunksize - (nextchunk.a + nextchunk.b));
+	/*if (isstacksort(stackgiver, chunksize -(nextchunk.a + nextchunk.b)) != 1)
 	{
 		printf("!!error, chunk of size %u not sorted after first half of quicksrt!\n", chunksize -(nextchunk.a + nextchunk.b));
 		ft_printstacks(stackgiver, stackreceiver);
 		exit(0);
-	}
+	}*/
 	//get lowerchunks back in full
 	lower_med_quicksort(stackgiver, stackreceiver, nextchunk);
 	//printf("top %u int of stack %c are supposed to be sorted\n", chunksize, stackgiver->name);

@@ -26,8 +26,8 @@ void	push_swap(t_data *stacka, t_data *stackb)
 	if (stacka->count >= 6)
 	*/
 
-	single_pi_quicksort(stacka, stackb, stacka->count);
-	//double_pi_quicksort(stacka, stackb, stacka->count);
+	//single_pi_quicksort(stacka, stackb, stacka->count);
+	double_pi_quicksort(stacka, stackb, stacka->count);
 		//algo_100(stacka, stackb);
 	//ope_sa (&stacka);
 	//ope_rra (&stacka);
