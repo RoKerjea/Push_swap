@@ -81,7 +81,6 @@ char	*join_input(int argc, char **argv)
 		free (tmp);
 		i++;
 	}
-	//printf("joined line =\'%s\'\n", lineres);
 	return (lineres);
 }
 
@@ -100,10 +99,7 @@ t_tabint	atol_table(char **table)
 	while (i < tabint.count)
 	{
 		if (checkarg(table[i]) == 1)
-		{
 			tabint.tab[i] = ft_atol(table[i]);
-			//printf("int number %d is %d\n", i, tabint.tab[i]);
-		}
 		else
 		{
 			write (2, "Error\n", 6);
@@ -113,7 +109,6 @@ t_tabint	atol_table(char **table)
 		}
 		i++;
 	}
-	//printf("end of atolconv\n");
 	return (tabint);
 }
 

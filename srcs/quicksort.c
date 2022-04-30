@@ -133,93 +133,69 @@ void	lower_med_quicksort(t_data *stackgiver, t_data *stackreceiver, t_median	nex
 	while (nextchunk.b--)
 		named_ope_push(stackreceiver, stackgiver);
 }
-/*
+
 void	pushswappush(t_data *stackgiver, t_data *stackreceiver)
 {
 	named_ope_push(stackgiver, stackreceiver);
 	named_ope_swap(stackgiver);
 	named_ope_push(stackreceiver, stackgiver);
-}*/
+}
 
 void	chunk_of_threea(t_data *stackgiver, t_data *stackreceiver)
 {
-	int	a;
-	int	b;
-	int	c;
+	int	a[3];
 
-	a = stackgiver->first->num;
-	b = stackgiver->first->next->num;
-	c = stackgiver->first->next->next->num;
-	if (a > b && b < c && a < c)
+	a[0] = stackgiver->first->num;
+	a[1] = stackgiver->first->next->num;
+	a[2] = stackgiver->first->next->next->num;
+	if (a[0] > a[1] && a[1] < a[2] && a[0] < a[2])
 		named_ope_swap(stackgiver);
-	else if (a > b && b > c && a > c)
+	else if (a[0] > a[1] && a[1] > a[2] && a[0] > a[2])
 	{
 		named_ope_swap(stackgiver);
-		named_ope_push(stackgiver, stackreceiver);
-		named_ope_swap(stackgiver);
-		named_ope_push(stackreceiver, stackgiver);
+		pushswappush(stackgiver, stackreceiver);
 		named_ope_swap(stackgiver);
 	}
-	else if (a > b && b < c && a > c)
+	else if (a[0] > a[1] && a[1] < a[2] && a[0] > a[2])
 	{
 		named_ope_swap(stackgiver);
-		named_ope_push(stackgiver, stackreceiver);
-		named_ope_swap(stackgiver);
-		named_ope_push(stackreceiver, stackgiver);
+		pushswappush(stackgiver, stackreceiver);
 	}
-	else if (a < b && b > c && a < c)
+	else if (a[0] < a[1] && a[1] > a[2] && a[0] < a[2])
+		pushswappush(stackgiver, stackreceiver);
+	else if (a[0] < a[1] && a[1] > a[2] && a[0] > a[2])
 	{
-		named_ope_push(stackgiver, stackreceiver);
-		named_ope_swap(stackgiver);
-		named_ope_push(stackreceiver, stackgiver);
-	}
-	else if (a < b && b > c && a > c)
-	{
-		named_ope_push(stackgiver, stackreceiver);
-		named_ope_swap(stackgiver);
-		named_ope_push(stackreceiver, stackgiver);
+		pushswappush(stackgiver, stackreceiver);
 		named_ope_swap(stackgiver);
 	}
 }
 
 void	chunk_of_threeb(t_data *stackgiver, t_data *stackreceiver)
 {
-	int	a;
-	int	b;
-	int	c;
+	int	a[3];
 
-	a = stackgiver->first->num;
-	b = stackgiver->first->next->num;
-	c = stackgiver->first->next->next->num;
-	if (a > b && b < c && a < c)
+	a[0] = stackgiver->first->num;
+	a[1] = stackgiver->first->next->num;
+	a[2] = stackgiver->first->next->next->num;
+	if (a[0] > a[1] && a[1] < a[2] && a[0] < a[2])
 	{
-		named_ope_push(stackgiver, stackreceiver);
-		named_ope_swap(stackgiver);
-		named_ope_push(stackreceiver, stackgiver);
+		pushswappush(stackgiver, stackreceiver);
 		named_ope_swap(stackgiver);
 	}
-	else if (a < b && b < c && a < c)
+	else if (a[0] < a[1] && a[1] < a[2] && a[0] < a[2])
 	{
 		named_ope_swap(stackgiver);
-		named_ope_push(stackgiver, stackreceiver);
-		named_ope_swap(stackgiver);
-		named_ope_push(stackreceiver, stackgiver);
+		pushswappush(stackgiver, stackreceiver);
 		named_ope_swap(stackgiver);
 	}
-	else if (a > b && b < c && a > c)
-	{
-		named_ope_push(stackgiver, stackreceiver);
-		named_ope_swap(stackgiver);
-		named_ope_push(stackreceiver, stackgiver);
-	}
-	else if (a < b && b > c && a < c)
+	else if (a[0] > a[1] && a[1] < a[2] && a[0] > a[2])
+		pushswappush(stackgiver, stackreceiver);
+	else if (a[0] < a[1] && a[1] > a[2] && a[0] < a[2])
 	{
 		named_ope_swap(stackgiver);
-		named_ope_push(stackgiver, stackreceiver);
-		named_ope_swap(stackgiver);
-		named_ope_push(stackreceiver, stackgiver);
+		pushswappush(stackgiver, stackreceiver);
 	}
-	else if (a < b && b > c && a > c)
+	else if (a[0] < a[1] && a[1] > a[2] && a[0] > a[2])
 		named_ope_swap(stackgiver);
 }
 
