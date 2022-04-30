@@ -58,7 +58,7 @@ void	pushlinkrightplace(t_data *stacka, t_data *stackb)
 	while (issort(stacka->first, stacka->count) != 1)
 		named_ope_rotate(stacka);
 }
-
+//need a smart rotate depending of most efficient cost!
 void	algo_5(t_data *stacka, t_data *stackb)
 {
 	if (stacka->count == 5)

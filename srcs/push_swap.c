@@ -19,9 +19,9 @@ void	push_swap(t_data *stacka, t_data *stackb)
 		named_ope_rotate(stacka);
 	if (stacka->count == 3)
 		algo_3(stacka);
-	if (stacka->count >= 4 && stacka->count <= 5)
-		algo_5(stacka, stackb);
-	if (stacka->count >= 6)
+	//if (stacka->count >= 4 && stacka->count <= 5)
+		//algo_5(stacka, stackb);
+	if (stacka->count >= 4)
 		double_pi_quicksort(stacka, stackb, stacka->count);
 	/*
 	ft_printstacks(stacka, stackb);
@@ -29,10 +29,10 @@ void	push_swap(t_data *stacka, t_data *stackb)
 	ope_rr(stacka, stackb);
 	ft_printstacks(stacka, stackb);*/
 	//ft_printstacksrev(stacka->last, stackb->last);	
-	if (issort(stacka->first, stacka->count) == 1 && stackb->first == NULL)
+/*	if (issort(stacka->first, stacka->count) == 1 && stackb->first == NULL)
 		printf ("stack is sorted!\n");
 	else
-		printf ("stack isn't sorted\n");
+		printf ("stack isn't sorted\n");*/
 }
 
 void	freestack(t_data *stacka)

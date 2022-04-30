@@ -13,7 +13,10 @@
 #include "../include/push_swap.h"
 
 t_median	push_to_other_stack(t_data *stackgiver, t_data *stackreceiver, unsigned int chunksize)
-{
+{/*
+	printf("start of push to stack%c for chunksize = %u\n", stackreceiver->name, chunksize);
+	printf("stackgiver count = %u\n", stackgiver->count);
+	ft_printstacks(stackgiver, stackreceiver);*/
 	int	non = 1;
 	if (chunksize - stackgiver->count == 0)
 		non = 0;
@@ -65,6 +68,7 @@ t_median	push_to_other_stack(t_data *stackgiver, t_data *stackreceiver, unsigned
 			}
 		}
 	}
+	//printf("median = %d, upquart = %d\n", median, upquartian);
 	while (biggerintinstack(median, stackgiver) && chunksize && stackgiver->name == 'b')
 	{
 		if (stackgiver->first->num < median && stackgiver->count > 1)
@@ -129,6 +133,13 @@ void	lower_med_quicksort(t_data *stackgiver, t_data *stackreceiver, t_median	nex
 	while (nextchunk.b--)
 		named_ope_push(stackreceiver, stackgiver);
 }
+/*
+void	pushswappush(t_data *stackgiver, t_data *stackreceiver)
+{
+	named_ope_push(stackgiver, stackreceiver);
+	named_ope_swap(stackgiver);
+	named_ope_push(stackreceiver, stackgiver);
+}*/
 
 void	chunk_of_threea(t_data *stackgiver, t_data *stackreceiver)
 {
@@ -227,7 +238,9 @@ void	double_pi_quicksort(t_data *stackgiver, t_data *stackreceiver, unsigned int
 	if (chunksize == 3 && stackgiver->name == 'b' && isstacksort(stackgiver, chunksize) != 1)
 		chunk_of_threeb(stackgiver, stackreceiver);
 	if (chunksize > 3 && isstacksort(stackgiver, chunksize) != 1)
+	{
 		nextchunk = push_to_other_stack(stackgiver, stackreceiver, chunksize);
+	}
 	if (isstacksort(stackgiver, chunksize - (nextchunk.a + nextchunk.b)) != 1)
 		double_pi_quicksort(stackgiver, stackreceiver, chunksize - (nextchunk.a + nextchunk.b));
 	lower_med_quicksort(stackgiver, stackreceiver, nextchunk);
