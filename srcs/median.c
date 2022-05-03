@@ -75,14 +75,14 @@ void	mediancycle(int *tab, t_medindex medindex, t_median *res)
 	return ;
 }
 
-int	oddevenmedian(int *tab, unsigned int chunksize)
+int	oddevenmedian(int *tab, unsigned int chunksize, float aim)
 {
 	t_median	res;
 	t_medindex	medindex;
 
 	medindex.start = 0;
 	medindex.end = chunksize - 1;
-	medindex.res = chunksize / 2;
+	medindex.res = chunksize * aim;
 	res.a = -2147483649;
 	res.b = -2147483649;
 	mediancycle(tab, medindex, &res);
@@ -92,7 +92,7 @@ int	oddevenmedian(int *tab, unsigned int chunksize)
 		return ((res.b + res.a) / 2);
 }
 
-int	findmedianofchunk(t_link *link, unsigned int chunksize)
+int	findmedianofchunk(t_link *link, unsigned int chunksize, float aim)
 {
 	int				*tab;
 	int				res;
@@ -106,79 +106,7 @@ int	findmedianofchunk(t_link *link, unsigned int chunksize)
 		link = link->next;
 		i++;
 	}
-	res = oddevenmedian(tab, i);
-	free(tab);
-	return (res);
-}
-
-int	oddevenquartian(int *tab, unsigned int chunksize)
-{
-	t_median	res;
-	t_medindex	medindex;
-
-	medindex.start = 0;
-	medindex.end = chunksize - 1;
-	medindex.res = chunksize / 4;
-	res.a = -2147483649;
-	res.b = -2147483649;
-	mediancycle(tab, medindex, &res);
-	if (chunksize % 2 == 1)
-		return (res.b);
-	else
-		return ((res.b + res.a) / 2);
-}
-
-int	findquartianofchunk(t_link *link, unsigned int chunksize)
-{
-	int				*tab;
-	int				res;
-	unsigned int	i;
-
-	i = 0;
-	tab = malloc(sizeof(int) * chunksize);
-	while (i < chunksize)
-	{
-		tab[i] = link->num;
-		link = link->next;
-		i++;
-	}
-	res = oddevenquartian(tab, i);
-	free(tab);
-	return (res);
-}
-
-int	oddevenupquartian(int *tab, unsigned int chunksize)
-{
-	t_median	res;
-	t_medindex	medindex;
-
-	medindex.start = 0;
-	medindex.end = chunksize - 1;
-	medindex.res = chunksize * (0.75);
-	res.a = -2147483649;
-	res.b = -2147483649;
-	mediancycle(tab, medindex, &res);
-	if (chunksize % 2 == 1)
-		return (res.b);
-	else
-		return ((res.b + res.a) / 2);
-}
-
-int	findupquartianofchunk(t_link *link, unsigned int chunksize)
-{
-	int				*tab;
-	int				res;
-	unsigned int	i;
-
-	i = 0;
-	tab = malloc(sizeof(int) * chunksize);
-	while (i < chunksize)
-	{
-		tab[i] = link->num;
-		link = link->next;
-		i++;
-	}
-	res = oddevenupquartian(tab, i);
+	res = oddevenmedian(tab, i, aim);
 	free(tab);
 	return (res);
 }

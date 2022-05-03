@@ -14,9 +14,9 @@
 
 void	ope_ss(t_data *stacka, t_data *stackb)
 {
-	if (stacka->count > 1)
+	if (stacka->len > 1)
 		ope_swap(stacka);
-	if (stackb->count > 1)
+	if (stackb->len > 1)
 		ope_swap(stackb);
 	write (1, "ss\n", 3);
 }

@@ -36,34 +36,48 @@ t_data	mkdata(void)
 
 	datastack.first = NULL;
 	datastack.last = NULL;
-	datastack.count = 0;
+	datastack.len = 0;
 	datastack.name = 'b';
 	return (datastack);
 }
 
+void	fill_stacka(t_data *stacka, t_tabint tabint)
+{
+	t_link			*nowlink;
+	t_link			*prevlink;
+
+	prevlink = stacka->first;
+	prevlink->num = tabint.tab[0];
+	stacka->len = 1;
+	while (stacka->len < tabint.count)
+	{
+		nowlink = mkstacklink();
+		if (nowlink == NULL)
+		{
+			stacka->name = 'c';
+			return ;
+		}
+		nowlink->num = tabint.tab[stacka->len];
+		if (prevlink)
+			forgelink(prevlink, nowlink);
+		stacka->len++;
+		prevlink = prevlink->next;
+	}
+	stacka->last = nowlink;
+}
+
 t_data	mkstacka(t_tabint tabint)
 {
-	unsigned int	i;
 	t_data			stacka;
-	t_link			*prevlink;
-	t_link			*nowlink;
 
 	stacka = mkdata();
 	stacka.name = 'a';
-	stacka.first = mkstacklink();//to protect!!
-	prevlink = stacka.first;
-	prevlink->num = tabint.tab[0];
-	i = 1;
-	while (i < tabint.count)
+	stacka.first = mkstacklink();
+	if (stacka.first == NULL)
 	{
-		nowlink = mkstacklink();//to protect!!
-		nowlink->num = tabint.tab[i];
-		if (prevlink)
-			forgelink(prevlink, nowlink);
-		i++;
-		prevlink = prevlink->next;
+		stacka.name = 'c';
+		return (stacka);
 	}
-	stacka.count = i;
-	stacka.last = nowlink;
+	fill_stacka(&stacka, tabint);
 	return (stacka);
 }

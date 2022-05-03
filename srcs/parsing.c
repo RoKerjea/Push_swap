@@ -55,9 +55,7 @@ int	checkarg(char *str)
 		return (-1);
 	l = ft_atol(str);
 	if (l < -2147483648 || l > 2147483647)
-	{
 		return (-1);
-	}
 	return (1);
 }
 

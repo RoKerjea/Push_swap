@@ -14,25 +14,12 @@
 
 void	push_swap(t_data *stacka, t_data *stackb)
 {
-	//ft_printstacks(stacka->first, stackb->first);
-	if (stacka->count == 2)
+	if (stacka->len == 2)
 		named_ope_rotate(stacka);
-	if (stacka->count == 3)
+	if (stacka->len == 3)
 		algo_3(stacka);
-	//if (stacka->count >= 4 && stacka->count <= 5)
-		//algo_5(stacka, stackb);
-	if (stacka->count >= 4)
-		double_pi_quicksort(stacka, stackb, stacka->count);
-	/*
-	ft_printstacks(stacka, stackb);
-	
-	ope_rr(stacka, stackb);
-	ft_printstacks(stacka, stackb);*/
-	//ft_printstacksrev(stacka->last, stackb->last);	
-/*	if (issort(stacka->first, stacka->count) == 1 && stackb->first == NULL)
-		printf ("stack is sorted!\n");
-	else
-		printf ("stack isn't sorted\n");*/
+	if (stacka->len >= 4)
+		double_pi_quicksort(stacka, stackb, stacka->len);
 }
 
 void	freestack(t_data *stacka)
@@ -42,13 +29,13 @@ void	freestack(t_data *stacka)
 
 	link = stacka->first;
 	nextlink = link->next;
-	while (stacka->count)
+	while (link)
 	{
 		free (link);
 		link = nextlink;
 		if (nextlink)
 			nextlink = link->next;
-		stacka->count--;
+		stacka->len--;
 	}
 	stacka->first = NULL;
 	stacka->last = NULL;
@@ -66,10 +53,16 @@ int	main(int argc, char **argv)
 	if (tabint.tab == NULL)
 		return (0);
 	stacka = mkstacka(tabint);
+	free(tabint.tab);
+	if (stacka.name == 'c')
+	{
+		if (stacka.first)
+			freestack(&stacka);
+		return (0);
+	}
 	stackb = mkdata();
-	if (issort(stacka.first, stacka.count) != 1)
+	if (issort(stacka.first, stacka.len) != 1)
 		push_swap(&stacka, &stackb);
 	freestack(&stacka);
-	free(tabint.tab);
 	return (0);
 }

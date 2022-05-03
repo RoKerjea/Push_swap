@@ -28,7 +28,7 @@ void	ope_swap(t_data *datastack)
 	link1->prev = link2;
 	link2->next = link1;
 	datastack->first = link2;
-	if (datastack->count == 2)
+	if (datastack->len == 2)
 		datastack->last = link1;
 }
 
@@ -78,6 +78,6 @@ void	ope_push(t_data *stackgiver, t_data *stackreceiver)
 	stackreceiver->first = link;
 	if (!stackreceiver->last)
 		stackreceiver->last = link;
-	stackgiver->count--;
-	stackreceiver->count++;
+	stackgiver->len--;
+	stackreceiver->len++;
 }

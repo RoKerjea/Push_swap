@@ -22,7 +22,7 @@
 
 typedef struct s_data
 {
-	unsigned int	count;
+	unsigned int	len;
 	char			name;
 	struct s_link	*first;
 	struct s_link	*last;
@@ -50,8 +50,8 @@ typedef struct s_median
 typedef struct s_medindex
 {
 	unsigned int	start;
-	unsigned int	end;
 	unsigned int	res;
+	unsigned int	end;
 }		t_medindex;
 
 /*LIB*/
@@ -70,24 +70,21 @@ int				isstacksort(t_data *stack, unsigned int size);
 int				issort(t_link *link, unsigned int size);
 int				issortrev(t_link *link, unsigned int size);
 
-/*printforcheck  TO_DELETE*/
-void			ft_printstacks(t_data *stackone, t_data *stacktwo);
-void			ft_printstacksrev(t_link *stacka, t_link *stackb);
-void			printtab(t_tabint tabint);
-
 /*mklst*/
 
-//t_link	*mkstacklink(void);
 t_data			mkstacka(t_tabint tabint);
-//int		checkarg(char *str);
 t_data			mkdata(void);
 
 /*algo.c*/
 
-void			algo_5(t_data *stacka, t_data *stackb);
+//void			algo_5(t_data *stacka, t_data *stackb);
 void			algo_3(t_data *stacka);
-int				smallerintinstack(int median, t_data *stack);
-int				biggerintinstack(int median, t_data *stack);
+
+/*push.c*/
+
+t_median		push_half(t_data *stkgiv, t_data *stkget, unsigned int size);
+int				smallerintinstack(int median, t_data *stack, unsigned int size);
+int				biggerintinstack(int median, t_data *stack, unsigned int size);
 
 /* operation.c*/
 
@@ -96,13 +93,10 @@ void			ope_rotate(t_data *datastack);
 void			ope_revrotate(t_data *datastack);
 void			ope_push(t_data *stackgiver, t_data *stackreceiver);
 
-/*named_ope1.c*/
+/*named_ope.c*/
 
 void			named_ope_swap(t_data *stack);
 void			named_ope_push(t_data *stackgiver, t_data *stackreceiver);
-
-/*named_ope2.c*/
-
 void			named_ope_rotate(t_data *stack);
 void			named_ope_revrotate(t_data *stack);
 
@@ -118,11 +112,13 @@ t_tabint		make_tab_from_input(int argc, char **argv);
 
 /*median.c*/
 
-int				findmedianofchunk(t_link *link, unsigned int chunksize);
-int				findquartianofchunk(t_link *link, unsigned int chunksize);
-int				findupquartianofchunk(t_link *link, unsigned int chunksize);
+int				findmedianofchunk(t_link *link, unsigned int chunksize, float aim);
+
+/*quicksort.c*/
 
 void			double_pi_quicksort(t_data *stg, t_data *str, unsigned int siz);
-//void			single_pi_quicksort(t_data *stg, t_data *str, unsigned int siz);
+void			chunk_of_threeb(t_data *stkgiv, t_data *stkget);
+void			chunk_of_threea(t_data *stkgiv, t_data *stkget);
+void			pushswappush(t_data *stkgiv, t_data *stkget);
 
 #endif
