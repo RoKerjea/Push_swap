@@ -112,7 +112,7 @@ t_tabint		make_tab_from_input(int argc, char **argv);
 
 /*median.c*/
 
-int				findmedianofchunk(t_link *link, unsigned int chunksize, float aim);
+int				findmedianofchunk(t_link *link, unsigned int size, float aim);
 
 /*quicksort.c*/
 
