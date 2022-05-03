@@ -23,7 +23,7 @@ void	swap(int *a, int *b)
 
 int	getpivotindexafterpart(int *tab, unsigned int starti, unsigned int endi)
 	{
-	int				pivoti;
+	unsigned int	pivoti;
 	int				n;
 	int				lst;
 	unsigned int	i;
@@ -48,29 +48,29 @@ int	getpivotindexafterpart(int *tab, unsigned int starti, unsigned int endi)
 	return (i);
 }
 
-void	mediancycle(int *tab, int startindex, int endindex, int midindex, t_median *res)
+void	mediancycle(int *tab, t_medindex medindex, t_median *res)
 {
-	int	pivotindex;
+	unsigned int	pivotindex;
 
-	if (startindex <= endindex)
+	if (medindex.start <= medindex.end)
 	{
-		pivotindex = getpivotindexafterpart(tab, startindex, endindex);
-		if (pivotindex == midindex)
-		{
+		pivotindex = getpivotindexafterpart(tab, medindex.start, medindex.end);
+		if (pivotindex == medindex.res)
 			res->b = tab[pivotindex];
-			if (res->a != -2147483648)
-				return ;
-		}
-		if (pivotindex == midindex -1)
-		{
+		if (pivotindex == medindex.res -1)
 			res->a = tab[pivotindex];
-			if (res->b != -2147483648)
-				return ;
+		if (res->b != -2147483649 && res->a != -2147483649)
+			return ;
+		if (pivotindex >= medindex.res)
+		{
+			medindex.end = pivotindex - 1;
+			mediancycle(tab, medindex, res);
 		}
-		if (pivotindex >= midindex)
-			mediancycle(tab, startindex, pivotindex - 1, midindex, res);
 		else
-			mediancycle(tab, pivotindex + 1, endindex, midindex, res);
+		{
+			medindex.start = pivotindex + 1;
+			mediancycle(tab, medindex, res);
+		}
 	}
 	return ;
 }
@@ -78,14 +78,18 @@ void	mediancycle(int *tab, int startindex, int endindex, int midindex, t_median 
 int	oddevenmedian(int *tab, unsigned int chunksize)
 {
 	t_median	res;
+	t_medindex	medindex;
 
-	res.a = -2147483648;
-	res.b = -2147483648;
-	mediancycle(tab, 0, chunksize - 1, chunksize / 2, &res);
+	medindex.start = 0;
+	medindex.end = chunksize - 1;
+	medindex.res = chunksize / 2;
+	res.a = -2147483649;
+	res.b = -2147483649;
+	mediancycle(tab, medindex, &res);
 	if (chunksize % 2 == 1)
 		return (res.b);
 	else
-		return (res.b / 2 + res.a / 2);
+		return ((res.b + res.a) / 2);
 }
 
 int	findmedianofchunk(t_link *link, unsigned int chunksize)
@@ -110,14 +114,18 @@ int	findmedianofchunk(t_link *link, unsigned int chunksize)
 int	oddevenquartian(int *tab, unsigned int chunksize)
 {
 	t_median	res;
+	t_medindex	medindex;
 
-	res.a = -2147483648;
-	res.b = -2147483648;
-	mediancycle(tab, 0, chunksize - 1, chunksize / 4, &res);
+	medindex.start = 0;
+	medindex.end = chunksize - 1;
+	medindex.res = chunksize / 4;
+	res.a = -2147483649;
+	res.b = -2147483649;
+	mediancycle(tab, medindex, &res);
 	if (chunksize % 2 == 1)
 		return (res.b);
 	else
-		return (res.b / 2 + res.a / 2);
+		return ((res.b + res.a) / 2);
 }
 
 int	findquartianofchunk(t_link *link, unsigned int chunksize)
@@ -142,14 +150,18 @@ int	findquartianofchunk(t_link *link, unsigned int chunksize)
 int	oddevenupquartian(int *tab, unsigned int chunksize)
 {
 	t_median	res;
+	t_medindex	medindex;
 
-	res.a = -2147483648;
-	res.b = -2147483648;
-	mediancycle(tab, 0, chunksize - 1, chunksize * (0.75), &res);
+	medindex.start = 0;
+	medindex.end = chunksize - 1;
+	medindex.res = chunksize * (0.75);
+	res.a = -2147483649;
+	res.b = -2147483649;
+	mediancycle(tab, medindex, &res);
 	if (chunksize % 2 == 1)
 		return (res.b);
 	else
-		return (res.b / 2 + res.a / 2);
+		return ((res.b + res.a) / 2);
 }
 
 int	findupquartianofchunk(t_link *link, unsigned int chunksize)

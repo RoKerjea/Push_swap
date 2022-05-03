@@ -46,9 +46,8 @@ int	checkarg(char *str)
 			return (-1);
 		if (str[i] >= '0' && str[i] <= '9')
 			j++;
-		if (str[i] == '-' && str[i + 1] == '-')
-			return (-1);
-		if ((str[i] >= '0' && str[i] <= '9') && str[i + 1] == '-')
+		if ((str[i] == '-' && str[i + 1] == '-')
+			|| ((str[i] >= '0' && str[i] <= '9') && str[i + 1] == '-'))
 			return (-1);
 		i++;
 	}
