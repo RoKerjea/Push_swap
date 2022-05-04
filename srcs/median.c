@@ -57,7 +57,7 @@ void	mediancycle(int *tab, t_medindex medindex, t_median *res)
 		pivotindex = getpivotindexafterpart(tab, medindex.start, medindex.end);
 		if (pivotindex == medindex.res)
 			res->b = tab[pivotindex];
-		if (pivotindex == medindex.res -1)
+		if (pivotindex == medindex.res - 1)
 			res->a = tab[pivotindex];
 		if (res->b != -2147483649 && res->a != -2147483649)
 			return ;
@@ -86,6 +86,7 @@ int	oddevenmedian(int *tab, unsigned int chunksize, float aim)
 	res.a = -2147483649;
 	res.b = -2147483649;
 	mediancycle(tab, medindex, &res);
+	//printf("aim position = %d resa = %li, resb = %li\n", medindex.res, res.a, res.b);
 	if (chunksize % 2 == 1)
 		return (res.b);
 	else

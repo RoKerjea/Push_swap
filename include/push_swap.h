@@ -113,6 +113,7 @@ t_tabint		make_tab_from_input(int argc, char **argv);
 /*median.c*/
 
 int				findmedianofchunk(t_link *link, unsigned int size, float aim);
+void			swap(int *a, int *b);
 
 /*quicksort.c*/
 

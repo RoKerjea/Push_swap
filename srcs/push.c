@@ -19,7 +19,7 @@ int	biggerintinstack(int median, t_data *stack, unsigned int size)
 	link = stack->first;
 	while (link != NULL && size--)
 	{
-		if (link->num > median)
+		if (link->num >= median)
 			return (1);
 		link = link->next;
 	}
@@ -33,7 +33,7 @@ int	smallerintinstack(int median, t_data *stack, unsigned int size)
 	link = stack->first;
 	while (link != NULL && size--)
 	{
-		if (link->num < median)
+		if (link->num <= median)
 			return (1);
 		link = link->next;
 	}
@@ -49,22 +49,33 @@ unsigned int size, t_median *nextchunk)
 
 	count.a = 0;
 	count.b = 0;
-	media = findmedianofchunk(stkgiv->first, size, 0.6);
-	upquart = findmedianofchunk(stkgiv->first, size, 0.8);
-	while (biggerintinstack(media, stkgiv, size))
+	media = findmedianofchunk(stkgiv->first, size, (1.0/2.0));
+	upquart = findmedianofchunk(stkgiv->first, size, (3.0/4.0));
+	while (biggerintinstack(media, stkgiv, size) && size--)
 	{
-		if (stkgiv->first->num < media && stkgiv->len > 1 && ++count.a)
-			named_ope_rotate(stkgiv);
-		if (stkgiv->first->num >= media && ++nextchunk->b)
+		if (stkgiv->first->num < media && stkgiv->len > 1)
+		{
+			if (size == 1)
+				named_ope_swap(stkgiv);
+			else
+			{
+				count.a++;			
+				named_ope_rotate(stkgiv);
+			}
+		}
+		else if (stkgiv->first->num >= media && ++nextchunk->b)
 		{
 			named_ope_push(stkgiv, stkget);
-			if (stkget->first->num < upquart && ++count.b && ++nextchunk->a)
+			if (stkget->first->num < upquart && ++nextchunk->a)
 			{
-				if (stkgiv->first->num < media && stkget->len > 1 && ++count.a)
-					ope_rr(stkgiv, stkget);
-				else
-					named_ope_rotate(stkget);
-			}			
+				if (biggerintinstack(media, stkgiv, size) && ++count.b)
+				{
+					if (stkgiv->first->num < media && stkget->len > 1 && ++count.a)
+						ope_rr(stkgiv, stkget);
+					else
+						named_ope_rotate(stkget);
+				}
+			}
 		}
 	}
 	return (count);
@@ -79,21 +90,32 @@ unsigned int size, t_median *nextchunk)
 
 	count.a = 0;
 	count.b = 0;
-	media = findmedianofchunk(stkgiv->first, size, 0.5);
+	media = findmedianofchunk(stkgiv->first, size, 0.4);
 	lquart = findmedianofchunk(stkgiv->first, size, 0.25);
-	while (smallerintinstack(media, stkgiv, size))
+	while (smallerintinstack(media, stkgiv, size) && size--)
 	{
-		if (stkgiv->first->num > media && stkgiv->len > 1 && ++count.a)
-			named_ope_rotate(stkgiv);
+		if (stkgiv->first->num > media && stkgiv->len > 1)
+		{
+			if (size == 1)
+				named_ope_swap(stkgiv);
+			else
+			{
+				named_ope_rotate(stkgiv);
+				count.a++;
+			}
+		}
 		if (stkgiv->first->num <= media && ++nextchunk->b)
 		{
 			named_ope_push(stkgiv, stkget);
-			if (stkget->first->num >= lquart && ++count.b && ++nextchunk->a)
+			if (stkget->first->num >= lquart && ++nextchunk->a)
 			{
-				if (stkgiv->first->num > media && stkget->len > 1 && ++count.a)
-					ope_rr(stkgiv, stkget);
-				else if (stkget->len > 1)
-					named_ope_rotate(stkget);
+				if (smallerintinstack(media, stkgiv, size) && ++count.b)
+				{
+					if (stkgiv->first->num > media && stkget->len > 1 && ++count.a)
+						ope_rr(stkgiv, stkget);
+					else if (stkget->len > 1)
+						named_ope_rotate(stkget);
+				}
 			}
 		}
 	}
