@@ -129,12 +129,12 @@ void	lower_med_quicksort(t_data *stkgiv, t_data *stkget, t_median nextchunk)
 		}
 		exit (0);
 	}
-	//printf("start of push of halfchunk to %c\n", stkgiv->name);
+	//printf("start of push of halfchunk to %c size %li\n", stkgiv->name, nextchunk.a);
 	while (nextchunk.a--)
 		named_ope_push(stkget, stkgiv);
 	/*ft_printstacks(stkgiv, stkget);
-	printf("end of push of halfchunk to %c\n", stkgiv->name);
-	*/if (isstacksort(stkget, stkget->len) == 1 && isstacksort(stkgiv, stkgiv->len) == 1)
+	printf("end of push of halfchunk to %c\n", stkgiv->name);*/
+	if (isstacksort(stkget, stkget->len) == 1 && isstacksort(stkgiv, stkgiv->len) == 1)
 	{
 		if (stkgiv->name == 'a')
 		{
@@ -150,7 +150,7 @@ void	lower_med_quicksort(t_data *stkgiv, t_data *stkget, t_median nextchunk)
 	}
 	if (isstacksort(stkget, nextchunk.b) != 1)
 		double_pi_quicksort(stkget, stkgiv, nextchunk.b);
-	//printf("start of push of halfchunk to %c\n", stkgiv->name);
+	//printf("start of push of halfchunk to %c size %li\n", stkgiv->name, nextchunk.b);
 	while (nextchunk.b--)
 		named_ope_push(stkget, stkgiv);
 	/*ft_printstacks(stkgiv, stkget);
