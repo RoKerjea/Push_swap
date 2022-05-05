@@ -12,6 +12,40 @@
 
 #include "../include/push_swap.h"
 
+void	ft_printstacks(t_data *stackone, t_data *stacktwo)
+{
+	t_link *stacka;
+	t_link *stackb;
+
+	if (stackone->name == 'a')
+	{
+		stacka = stackone->first;
+		stackb = stacktwo->first;
+	}
+	else
+	{
+		stacka = stacktwo->first;
+		stackb = stackone->first;
+	}
+	write (1, "stacks first to last\n", 21);
+	while (stacka || stackb)
+	{
+		if (stacka)
+		{
+			ft_putnbr_fd(stacka->num, 1);
+			stacka = stacka->next;
+		}
+		write (1, " | ", 3);
+		if (stackb)
+		{
+			ft_putnbr_fd(stackb->num, 1);
+			stackb = stackb->next;
+		}
+		write (1, "\n", 1);
+	}
+	write (1, "\n", 1);
+}
+
 void	pushswappush(t_data *stkgiv, t_data *stkget)
 {
 	named_ope_push(stkgiv, stkget);
@@ -81,12 +115,46 @@ void	lower_med_quicksort(t_data *stkgiv, t_data *stkget, t_median nextchunk)
 {
 	if (isstacksort(stkget, nextchunk.a) != 1)
 		double_pi_quicksort(stkget, stkgiv, nextchunk.a);
+	if (isstacksort(stkget, stkget->len) == 1 && isstacksort(stkgiv, stkgiv->len) == 1)
+	{
+		if (stkgiv->name == 'a')
+		{
+			while (stkget->len)
+				named_ope_push(stkget, stkgiv);
+		}
+		if (stkgiv->name == 'b')
+		{
+			while (stkgiv->len)
+				named_ope_push(stkgiv, stkget);
+		}
+		exit (0);
+	}
+	//printf("start of push of halfchunk to %c\n", stkgiv->name);
 	while (nextchunk.a--)
 		named_ope_push(stkget, stkgiv);
+	/*ft_printstacks(stkgiv, stkget);
+	printf("end of push of halfchunk to %c\n", stkgiv->name);
+	*/if (isstacksort(stkget, stkget->len) == 1 && isstacksort(stkgiv, stkgiv->len) == 1)
+	{
+		if (stkgiv->name == 'a')
+		{
+			while (stkget->len)
+				named_ope_push(stkget, stkgiv);
+		}
+		if (stkgiv->name == 'b')
+		{
+			while (stkgiv->len)
+				named_ope_push(stkgiv, stkget);
+		}
+		exit (0);
+	}
 	if (isstacksort(stkget, nextchunk.b) != 1)
 		double_pi_quicksort(stkget, stkgiv, nextchunk.b);
+	//printf("start of push of halfchunk to %c\n", stkgiv->name);
 	while (nextchunk.b--)
 		named_ope_push(stkget, stkgiv);
+	/*ft_printstacks(stkgiv, stkget);
+	printf("end of push of halfchunk to %c\n", stkgiv->name);*/
 }
 
 int med_of_four(t_link *link)
@@ -199,6 +267,39 @@ void	chunk_of_four_to_b(t_data *stkgiv, t_data *stkget)
 	named_ope_push(stkget, stkgiv);
 }
 
+void	revsorted(t_data *stkgiv, t_data *stkget, unsigned int size)
+{
+	/*printf("start of rev chunk size = %d for stack %c\n", size, stkgiv->name);
+	ft_printstacks(stkgiv, stkget);*/
+	unsigned int	i;
+	named_ope_rotate(stkgiv);
+	i = size - 1;
+	while (i)
+	{
+		named_ope_push(stkgiv, stkget);
+		i--;
+	}
+	i = size - 2;
+	while (i)
+	{
+		named_ope_rotate(stkget);
+		i--;
+	}
+	named_ope_revrotate(stkgiv);
+	named_ope_push(stkget, stkgiv);
+	i = size - 2;
+	while (i)
+	{
+		named_ope_revrotate(stkget);
+		named_ope_push(stkget, stkgiv);
+		i--;
+	}
+	if (isstacksort(stkgiv, size) != 1)
+		printf("ceci est un probleme\n");
+	/*ft_printstacks(stkgiv, stkget);
+	printf("end of rev chunk size = %d\n", size);*/
+}
+
 void	double_pi_quicksort(t_data *stkgiv, t_data *stkget, unsigned int size)
 {
 	t_median	nextchunk;
@@ -208,13 +309,20 @@ void	double_pi_quicksort(t_data *stkgiv, t_data *stkget, unsigned int size)
 	if (size == 1 || size == 0)
 		return ;
 	if (size == 2)
-		named_ope_swap(stkgiv);
+	{
+		if (isstacksort(stkget, 2) != 1)
+			ope_ss(stkget, stkgiv);
+		else
+			named_ope_swap(stkgiv);
+	}
 	if (size == 3 && stkgiv->len == 3 && isstacksort(stkgiv, size) != 1)
 		algo_3(stkgiv);
 	if (size == 3 && stkgiv->name == 'a' && isstacksort(stkgiv, size) != 1)
 		chunk_of_threea(stkgiv, stkget);
 	if (size == 3 && stkgiv->name == 'b' && isstacksort(stkgiv, size) != 1)
 		chunk_of_threeb(stkgiv, stkget);
+	if (size > 3 && isstackrevsort(stkgiv, size) == 1)
+		revsorted(stkgiv, stkget, size);
 	if (size == 4 && stkgiv->name == 'a' && isstacksort(stkgiv, size) != 1)
 		chunk_of_four_to_b(stkgiv, stkget);
 	if (size == 4 && stkgiv->name == 'b' && isstacksort(stkgiv, size) != 1)
@@ -223,5 +331,6 @@ void	double_pi_quicksort(t_data *stkgiv, t_data *stkget, unsigned int size)
 		nextchunk = push_half(stkgiv, stkget, size);
 	if (isstacksort(stkgiv, size - (nextchunk.a + nextchunk.b)) != 1)
 		double_pi_quicksort(stkgiv, stkget, size - (nextchunk.a + nextchunk.b));
-	lower_med_quicksort(stkgiv, stkget, nextchunk);
+	if ((nextchunk.a + nextchunk.b) > 0)
+		lower_med_quicksort(stkgiv, stkget, nextchunk);
 }

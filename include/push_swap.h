@@ -66,6 +66,7 @@ unsigned long	ft_strlen(const char *s);
 
 /*sorted.c*/
 
+int				isstackrevsort(t_data *stack, unsigned int size);
 int				isstacksort(t_data *stack, unsigned int size);
 int				issort(t_link *link, unsigned int size);
 int				issortrev(t_link *link, unsigned int size);

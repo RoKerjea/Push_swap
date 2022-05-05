@@ -49,14 +49,19 @@ unsigned int size, t_median *nextchunk)
 
 	count.a = 0;
 	count.b = 0;
-	media = findmedianofchunk(stkgiv->first, size, (1.0/2.0));
-	upquart = findmedianofchunk(stkgiv->first, size, (3.0/4.0));
+	media = findmedianofchunk(stkgiv->first, size, 0.5);
+	upquart = findmedianofchunk(stkgiv->first, size, 0.75);
 	while (biggerintinstack(media, stkgiv, size) && size--)
 	{
 		if (stkgiv->first->num < media && stkgiv->len > 1)
 		{
 			if (size == 1)
-				named_ope_swap(stkgiv);
+			{
+				if (isstacksort(stkget, 2) && (nextchunk->b - nextchunk->a) >= 2)
+					ope_ss(stkget, stkgiv);
+				else
+					named_ope_swap(stkgiv);
+			}
 			else
 			{
 				count.a++;			
@@ -97,7 +102,12 @@ unsigned int size, t_median *nextchunk)
 		if (stkgiv->first->num > media && stkgiv->len > 1)
 		{
 			if (size == 1)
-				named_ope_swap(stkgiv);
+			{
+				if (isstacksort(stkget, 2) && (nextchunk->b - nextchunk->a) >= 2)
+					ope_ss(stkget, stkgiv);
+				else
+					named_ope_swap(stkgiv);
+			}
 			else
 			{
 				named_ope_rotate(stkgiv);
