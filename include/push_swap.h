@@ -26,6 +26,8 @@ typedef struct s_data
 	char			name;
 	struct s_link	*first;
 	struct s_link	*last;
+	unsigned int	waitcount;
+	char			waitpushto;
 }		t_data;
 
 typedef struct s_link
@@ -66,6 +68,7 @@ unsigned long	ft_strlen(const char *s);
 
 /*sorted.c*/
 
+int				isstackrevsort(t_data *stack, unsigned int size);
 int				isstacksort(t_data *stack, unsigned int size);
 int				issort(t_link *link, unsigned int size);
 int				issortrev(t_link *link, unsigned int size);

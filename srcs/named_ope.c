@@ -12,6 +12,63 @@
 
 #include "../include/push_swap.h"
 
+void	waitpush(t_data *stackgiver, t_data *stackreceiver, char *order)
+{
+	if (order != 'pa' && order != 'pb')
+	{
+		while (stackgiver->len > 0 && stackgiver->waitcount > 0)
+		{
+			ope_push(stackgiver, stackreceiver);
+			if (stackreceiver->name == 'a')
+				write (1, "pa\n", 3);
+			else
+				write (1, "pb\n", 3);
+			stackgiver->waitcount--;
+		}
+		stackgiver->waitpushto = 'x';
+		stackreceiver->waitpushto = 'x';
+	}
+	if (order == 'pa' && stackgiver->waitpushto == 'a')
+	{
+		stackreceiver->waitcount++;
+		stackgiver->waitcount++;
+	}
+	if (order == 'pa' && stackgiver->waitpushto == 'b')
+	{
+		stackreceiver->waitcount--;
+		stackgiver->waitcount--;
+	}
+	if (order == 'pb' && stackgiver->waitpushto == 'b')
+	{
+		stackreceiver->waitcount++;
+		stackgiver->waitcount++;
+	}
+	if (order == 'pb' && stackgiver->waitpushto == 'a')
+	{
+		stackreceiver->waitcount--;
+		stackgiver->waitcount--;
+	}
+	if (order == 'pb' && stackgiver->waitpushto == 'x')
+	{
+		stackgiver->waitpushto = 'b';
+		stackreceiver->waitpushto = 'b';
+		stackreceiver->waitcount++;
+		stackgiver->waitcount++;
+	}
+	if (order == 'pb' && stackgiver->waitpushto == 'x')
+	{
+		stackgiver->waitpushto = 'b';
+		stackreceiver->waitpushto = 'b';
+		stackreceiver->waitcount++;
+		stackgiver->waitcount++;
+	}
+	if (stackgiver->waitpushto == 0)
+	{
+		stackgiver->waitpushto = 'x';
+		stackreceiver->waitpushto = 'x';
+	}
+}
+
 void	named_ope_swap(t_data *stack)
 {
 	if (stack->len > 1)
