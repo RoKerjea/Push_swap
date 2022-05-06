@@ -205,7 +205,6 @@ void	chunk_of_four_to_b(t_data *stkgiv, t_data *stkget)
 	j = 0;
 	i = 4;
 	media = med_of_four(stkgiv->first);
-	//printf("media = %i\n", media);
 	while (smallerintinstack(media, stkgiv, i) && i--)
 	{
 		if (stkgiv->first->num > media)
@@ -235,8 +234,7 @@ void	chunk_of_four_to_b(t_data *stkgiv, t_data *stkget)
 
 void	revsorted(t_data *stkgiv, t_data *stkget, unsigned int size)
 {
-	/*printf("start of rev chunk size = %d for stack %c\n", size, stkgiv->name);
-	ft_printstacks(stkgiv, stkget);*/
+
 	unsigned int	i;
 	named_ope_rotate(stkgiv, stkget);
 	i = size - 1;
@@ -262,8 +260,7 @@ void	revsorted(t_data *stkgiv, t_data *stkget, unsigned int size)
 	}
 	if (isstacksort(stkgiv, size) != 1)
 		printf("ceci est un probleme\n");
-	/*ft_printstacks(stkgiv, stkget);
-	printf("end of rev chunk size = %d\n", size);*/
+
 }
 
 void	double_pi_quicksort(t_data *stkgiv, t_data *stkget, unsigned int size)
@@ -287,13 +284,13 @@ void	double_pi_quicksort(t_data *stkgiv, t_data *stkget, unsigned int size)
 		chunk_of_threea(stkgiv, stkget);
 	if (size == 3 && stkgiv->name == 'b' && isstacksort(stkgiv, size) != 1)
 		chunk_of_threeb(stkgiv, stkget);
-	if (size > 3 && isstackrevsort(stkgiv, size) == 1)
+	/*if (size > 3 && isstackrevsort(stkgiv, size) == 1)
 		revsorted(stkgiv, stkget, size);
 	if (size == 4 && stkgiv->name == 'a' && isstacksort(stkgiv, size) != 1)
 		chunk_of_four_to_b(stkgiv, stkget);
 	if (size == 4 && stkgiv->name == 'b' && isstacksort(stkgiv, size) != 1)
-		chunk_of_four_to_a(stkgiv, stkget);
-	if (size > 4 && isstacksort(stkgiv, size) != 1)
+		chunk_of_four_to_a(stkgiv, stkget);*/
+	if (size > 2 && isstacksort(stkgiv, size) != 1)
 		nextchunk = push_half(stkgiv, stkget, size);
 	if (isstacksort(stkgiv, size - (nextchunk.a + nextchunk.b)) != 1)
 		double_pi_quicksort(stkgiv, stkget, size - (nextchunk.a + nextchunk.b));

@@ -49,35 +49,35 @@ unsigned int size, t_median *nextchunk)
 
 	count.a = 0;
 	count.b = 0;
-	media = findmedianofchunk(stkgiv->first, size, 0.5);
-	upquart = findmedianofchunk(stkgiv->first, size, 0.75);
+	media = findmedianofchunk(stkgiv->first, size, 0.4);
+	upquart = findmedianofchunk(stkgiv->first, size, 0.65);
 	while (biggerintinstack(media, stkgiv, size) && size--)
 	{
 		if (stkgiv->first->num < media && stkgiv->len > 1)
 		{
 			if (size == 1)
 			{
-				if (isstacksort(stkget, 2) && (nextchunk->b - nextchunk->a) >= 2)
+				if (isstacksort(stkget, 2) && (nextchunk->b - nextchunk->a) >= 2 && stkgiv->len > 1 && stkget->len > 1)
 					ope_ss(stkget, stkgiv);
-				else
+				else if (stkgiv->len > 1)
 					named_ope_swap(stkgiv, stkget);
 			}
-			else
+			else if (stkgiv->len > 1)
 			{
 				count.a++;			
 				named_ope_rotate(stkgiv, stkget);
 			}
 		}
-		else if (stkgiv->first->num >= media && ++nextchunk->b)
+		else if (stkgiv->first->num >= media && ++nextchunk->b && stkgiv->len > 0)
 		{
 			named_ope_push(stkgiv, stkget);
 			if (stkget->first->num < upquart && ++nextchunk->a)
 			{
 				if (biggerintinstack(media, stkgiv, size) && ++count.b)
 				{
-					if (stkgiv->first->num < media && stkget->len > 1 && ++count.a)
+					if (stkgiv->first->num < media && stkget->len > 1 && stkgiv->len > 1 && ++count.a)
 						ope_rr(stkgiv, stkget);
-					else
+					else if(stkget->len > 1)
 						named_ope_rotate(stkget, stkgiv);
 				}
 			}
@@ -103,14 +103,14 @@ unsigned int size, t_median *nextchunk)
 		{
 			if (size == 1)
 			{
-				if (isstacksort(stkget, 2) && (nextchunk->b - nextchunk->a) >= 2)
+				if (isstacksort(stkget, 2) && (nextchunk->b - nextchunk->a) >= 2 && stkget->len > 1 && stkgiv->len > 1)
 				{
 					ope_ss(stkget, stkgiv);
 				}
-				else
+				else if (stkgiv->len > 1)
 					named_ope_swap(stkgiv, stkget);
 			}
-			else
+			else if (stkgiv->len > 1)
 			{
 				named_ope_rotate(stkgiv, stkget);
 				count.a++;
@@ -123,7 +123,7 @@ unsigned int size, t_median *nextchunk)
 			{
 				if (smallerintinstack(media, stkgiv, size) && ++count.b)
 				{
-					if (stkgiv->first->num > media && stkget->len > 1 && ++count.a)
+					if (stkgiv->first->num > media && stkget->len > 1 && stkgiv->len > 1 && ++count.a)
 						ope_rr(stkgiv, stkget);
 					else if (stkget->len > 1)
 						named_ope_rotate(stkget, stkgiv);
