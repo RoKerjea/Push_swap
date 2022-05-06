@@ -32,19 +32,19 @@ void	actualpush(t_data *stackgiver, t_data *stackreceiver)
 }
 
 void	waitpush(t_data *stackgiver, t_data *stackreceiver, char order)
-{
-	/*if (stackgiver && stackreceiver && order)
+{/*
+	if (stackgiver && stackreceiver && order)
 	{}*/
-	if (order == 'x')
+	if (order == 'x' && stackgiver->waitcount > 0)
 	{
 		actualpush(stackgiver, stackreceiver);
 	}
-	else if (order == stackgiver->waitpushto && (order == 'a' || order == 'b'))
+	else if (order == stackgiver->waitpushto && order != 'x' && stackgiver->waitcount > 0)
 	{
 		stackreceiver->waitcount++;
 		stackgiver->waitcount++;
 	}
-	else if ((order == 'a' && stackgiver->waitpushto == 'b') || (order == 'b' && stackgiver->waitpushto == 'a'))
+	else if (((order == 'a' && stackgiver->waitpushto == 'b') || (order == 'b' && stackgiver->waitpushto == 'a')) && stackgiver->waitcount > 0)
 	{
 		stackreceiver->waitcount--;
 		stackgiver->waitcount--;
@@ -65,7 +65,7 @@ void	waitpush(t_data *stackgiver, t_data *stackreceiver, char order)
 
 void	named_ope_push(t_data *stackgiver, t_data *stackreceiver)
 {
-	if (stackgiver->len > 0)
+	if (stackgiver->len >= 1)
 	{
 		waitpush(stackgiver, stackreceiver, stackreceiver->name);
 		ope_push(stackgiver, stackreceiver);

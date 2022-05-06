@@ -99,6 +99,7 @@ void			ope_push(t_data *stackgiver, t_data *stackreceiver);
 
 /*named_ope.c*/
 
+void			actualpush(t_data *stackgiver, t_data *stackreceiver);
 void			named_ope_swap(t_data *stackgiver, t_data *stackreceiver);
 void			named_ope_push(t_data *stackgiver, t_data *stackreceiver);
 void			named_ope_rotate(t_data *stackgiver, t_data *stackreceiver);

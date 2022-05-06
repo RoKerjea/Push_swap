@@ -38,6 +38,8 @@ t_data	mkdata(void)
 	datastack.last = NULL;
 	datastack.len = 0;
 	datastack.name = 'b';
+	datastack.waitpushto = 'x';
+	datastack.waitcount = 0;
 	return (datastack);
 }
 
