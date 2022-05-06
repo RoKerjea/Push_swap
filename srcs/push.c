@@ -60,12 +60,12 @@ unsigned int size, t_median *nextchunk)
 				if (isstacksort(stkget, 2) && (nextchunk->b - nextchunk->a) >= 2)
 					ope_ss(stkget, stkgiv);
 				else
-					named_ope_swap(stkgiv);
+					named_ope_swap(stkgiv, stkget);
 			}
 			else
 			{
 				count.a++;			
-				named_ope_rotate(stkgiv);
+				named_ope_rotate(stkgiv, stkget);
 			}
 		}
 		else if (stkgiv->first->num >= media && ++nextchunk->b)
@@ -78,7 +78,7 @@ unsigned int size, t_median *nextchunk)
 					if (stkgiv->first->num < media && stkget->len > 1 && ++count.a)
 						ope_rr(stkgiv, stkget);
 					else
-						named_ope_rotate(stkget);
+						named_ope_rotate(stkget, stkgiv);
 				}
 			}
 		}
@@ -104,13 +104,15 @@ unsigned int size, t_median *nextchunk)
 			if (size == 1)
 			{
 				if (isstacksort(stkget, 2) && (nextchunk->b - nextchunk->a) >= 2)
+				{
 					ope_ss(stkget, stkgiv);
+				}
 				else
-					named_ope_swap(stkgiv);
+					named_ope_swap(stkgiv, stkget);
 			}
 			else
 			{
-				named_ope_rotate(stkgiv);
+				named_ope_rotate(stkgiv, stkget);
 				count.a++;
 			}
 		}
@@ -124,7 +126,7 @@ unsigned int size, t_median *nextchunk)
 					if (stkgiv->first->num > media && stkget->len > 1 && ++count.a)
 						ope_rr(stkgiv, stkget);
 					else if (stkget->len > 1)
-						named_ope_rotate(stkget);
+						named_ope_rotate(stkget, stkgiv);
 				}
 			}
 		}
@@ -155,8 +157,8 @@ t_median	push_half(t_data *stkgiv, t_data *stkget, unsigned int size)
 		ope_rrr(stkgiv, stkget);
 	}
 	while (non && count.a-- && stkgiv->len > 1)
-		named_ope_revrotate(stkgiv);
+		named_ope_revrotate(stkgiv, stkget);
 	while (count.b-- && stkget->len > 1)
-		named_ope_revrotate(stkget);
+		named_ope_revrotate(stkget, stkgiv);
 	return (nextchunk);
 }

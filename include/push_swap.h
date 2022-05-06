@@ -26,7 +26,7 @@ typedef struct s_data
 	char			name;
 	struct s_link	*first;
 	struct s_link	*last;
-	unsigned int	waitcount;
+	int	waitcount;
 	char			waitpushto;
 }		t_data;
 
@@ -81,7 +81,7 @@ t_data			mkdata(void);
 /*algo.c*/
 
 //void			algo_5(t_data *stacka, t_data *stackb);
-void			algo_3(t_data *stacka);
+void			algo_3(t_data *stacka, t_data *stackb);
 
 /*push.c*/
 
@@ -91,6 +91,7 @@ int				biggerintinstack(int median, t_data *stack, unsigned int size);
 
 /* operation.c*/
 
+void			waitpush(t_data *stackgiver, t_data *stackreceiver, char order);
 void			ope_swap(t_data *datastack);
 void			ope_rotate(t_data *datastack);
 void			ope_revrotate(t_data *datastack);
@@ -98,16 +99,16 @@ void			ope_push(t_data *stackgiver, t_data *stackreceiver);
 
 /*named_ope.c*/
 
-void			named_ope_swap(t_data *stack);
+void			named_ope_swap(t_data *stackgiver, t_data *stackreceiver);
 void			named_ope_push(t_data *stackgiver, t_data *stackreceiver);
-void			named_ope_rotate(t_data *stack);
-void			named_ope_revrotate(t_data *stack);
+void			named_ope_rotate(t_data *stackgiver, t_data *stackreceiver);
+void			named_ope_revrotate(t_data *stackgiver, t_data *stackreceiver);
 
 /*double_ope.c*/
 
-void			ope_ss(t_data *stacka, t_data *stackb);
-void			ope_rr(t_data *stacka, t_data *stackb);
-void			ope_rrr(t_data *stacka, t_data *stackb);
+void			ope_ss(t_data *stackgiver, t_data *stackreceiver);
+void			ope_rr(t_data *stackgiver, t_data *stackreceiver);
+void			ope_rrr(t_data *stackgiver, t_data *stackreceiver);
 
 /*parsing.c*/
 

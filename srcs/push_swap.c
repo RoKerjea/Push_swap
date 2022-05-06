@@ -15,9 +15,9 @@
 void	push_swap(t_data *stacka, t_data *stackb)
 {
 	if (stacka->len == 2)
-		named_ope_rotate(stacka);
+		named_ope_rotate(stacka, stackb);
 	if (stacka->len == 3)
-		algo_3(stacka);
+		algo_3(stacka, stackb);
 	if (stacka->len >= 4)
 		double_pi_quicksort(stacka, stackb, stacka->len);
 }

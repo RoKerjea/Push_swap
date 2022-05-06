@@ -12,7 +12,7 @@
 
 #include "../include/push_swap.h"
 
-void	algo_3(t_data *stacka)
+void	algo_3(t_data *stacka, t_data *stackb)
 {
 	int	a;
 	int	b;
@@ -22,19 +22,19 @@ void	algo_3(t_data *stacka)
 	b = stacka->first->next->num;
 	c = stacka->first->next->next->num;
 	if (a > b && b < c && a < c)
-		named_ope_swap (stacka);
+		named_ope_swap (stacka, stackb);
 	else if (a > b && b > c && a > c)
 	{
-		named_ope_swap (stacka);
-		named_ope_revrotate (stacka);
+		named_ope_swap (stacka, stackb);
+		named_ope_revrotate (stacka, stackb);
 	}
 	else if (a > b && b < c && a > c)
-		named_ope_rotate (stacka);
+		named_ope_rotate (stacka, stackb);
 	else if (a < b && b > c && a < c)
 	{
-		named_ope_swap (stacka);
-		named_ope_rotate (stacka);
+		named_ope_swap (stacka, stackb);
+		named_ope_rotate (stacka, stackb);
 	}
 	else if (a < b && b > c && a > c)
-		named_ope_revrotate (stacka);
+		named_ope_revrotate (stacka, stackb);
 }

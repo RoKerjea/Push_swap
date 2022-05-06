@@ -12,25 +12,37 @@
 
 #include "../include/push_swap.h"
 
-void	ope_ss(t_data *stacka, t_data *stackb)
+void	ope_ss(t_data *stackgiver, t_data *stackreceiver)
 {
-	if (stacka->len > 1)
-		ope_swap(stacka);
-	if (stackb->len > 1)
-		ope_swap(stackb);
-	write (1, "ss\n", 3);
+	if (stackreceiver->len > 1 && stackgiver->len > 1)
+	{
+		waitpush(stackgiver, stackreceiver, 'x');
+		if (stackgiver->len > 1)
+			ope_swap(stackgiver);
+		if (stackreceiver->len > 1)
+			ope_swap(stackreceiver);
+		write (1, "ss\n", 3);
+	}
 }
 
-void	ope_rr(t_data *stacka, t_data *stackb)
+void	ope_rr(t_data *stackgiver, t_data *stackreceiver)
 {
-	ope_rotate(stacka);
-	ope_rotate(stackb);
-	write (1, "rr\n", 3);
+	if (stackreceiver->len > 1 && stackgiver->len > 1)
+	{
+		waitpush(stackgiver, stackreceiver, 'x');
+		ope_rotate(stackgiver);
+		ope_rotate(stackreceiver);
+		write (1, "rr\n", 3);
+	}
 }
 
-void	ope_rrr(t_data *stacka, t_data *stackb)
+void	ope_rrr(t_data *stackgiver, t_data *stackreceiver)
 {
-	ope_revrotate(stacka);
-	ope_revrotate(stackb);
-	write (1, "rrr\n", 4);
+	if (stackreceiver->len > 1 && stackgiver->len > 1)
+	{
+		waitpush(stackgiver, stackreceiver, 'x');
+		ope_revrotate(stackgiver);
+		ope_revrotate(stackreceiver);
+		write (1, "rrr\n", 4);
+	}
 }

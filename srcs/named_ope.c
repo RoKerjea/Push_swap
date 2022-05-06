@@ -12,72 +12,54 @@
 
 #include "../include/push_swap.h"
 
-void	waitpush(t_data *stackgiver, t_data *stackreceiver, char *order)
+void	actualpush(t_data *stackgiver, t_data *stackreceiver)
 {
-	if (order != 'pa' && order != 'pb')
+	//printf("gatepush, waitcount = %d\n", stackgiver->waitcount);
+	while (stackgiver->waitcount > 0)
 	{
-		while (stackgiver->len > 0 && stackgiver->waitcount > 0)
-		{
-			ope_push(stackgiver, stackreceiver);
-			if (stackreceiver->name == 'a')
-				write (1, "pa\n", 3);
-			else
-				write (1, "pb\n", 3);
-			stackgiver->waitcount--;
-		}
-		stackgiver->waitpushto = 'x';
-		stackreceiver->waitpushto = 'x';
-	}
-	if (order == 'pa' && stackgiver->waitpushto == 'a')
-	{
-		stackreceiver->waitcount++;
-		stackgiver->waitcount++;
-	}
-	if (order == 'pa' && stackgiver->waitpushto == 'b')
-	{
+		//printf("gatepush, waitcount = %d\n", stackgiver->waitcount);
+		if (stackgiver->waitpushto == 'a')
+			write (1, "pa\n", 3);
+		else
+			write (1, "pb\n", 3);
 		stackreceiver->waitcount--;
 		stackgiver->waitcount--;
 	}
-	if (order == 'pb' && stackgiver->waitpushto == 'b')
-	{
-		stackreceiver->waitcount++;
-		stackgiver->waitcount++;
-	}
-	if (order == 'pb' && stackgiver->waitpushto == 'a')
-	{
-		stackreceiver->waitcount--;
-		stackgiver->waitcount--;
-	}
-	if (order == 'pb' && stackgiver->waitpushto == 'x')
-	{
-		stackgiver->waitpushto = 'b';
-		stackreceiver->waitpushto = 'b';
-		stackreceiver->waitcount++;
-		stackgiver->waitcount++;
-	}
-	if (order == 'pb' && stackgiver->waitpushto == 'x')
-	{
-		stackgiver->waitpushto = 'b';
-		stackreceiver->waitpushto = 'b';
-		stackreceiver->waitcount++;
-		stackgiver->waitcount++;
-	}
-	if (stackgiver->waitpushto == 0)
-	{
-		stackgiver->waitpushto = 'x';
-		stackreceiver->waitpushto = 'x';
-	}
+	stackgiver->waitpushto = 'x';
+	stackreceiver->waitpushto = 'x';
+	stackgiver->waitcount = 0;
+	stackreceiver->waitcount = 0;
 }
 
-void	named_ope_swap(t_data *stack)
+void	waitpush(t_data *stackgiver, t_data *stackreceiver, char order)
 {
-	if (stack->len > 1)
+	/*if (stackgiver && stackreceiver && order)
+	{}*/
+	if (order == 'x')
 	{
-		ope_swap(stack);
-		if (stack->name == 'a')
-			write (1, "sa\n", 3);
-		else
-			write (1, "sb\n", 3);
+		actualpush(stackgiver, stackreceiver);
+	}
+	else if (order == stackgiver->waitpushto && (order == 'a' || order == 'b'))
+	{
+		stackreceiver->waitcount++;
+		stackgiver->waitcount++;
+	}
+	else if ((order == 'a' && stackgiver->waitpushto == 'b') || (order == 'b' && stackgiver->waitpushto == 'a'))
+	{
+		stackreceiver->waitcount--;
+		stackgiver->waitcount--;
+		if (stackgiver->waitcount == 0)
+		{
+			stackgiver->waitpushto = 'x';
+			stackreceiver->waitpushto = 'x';
+		}
+	}
+	else if (order != 'x' && stackgiver->waitpushto == 'x')
+	{
+		stackgiver->waitpushto = order;
+		stackreceiver->waitpushto = order;
+		stackreceiver->waitcount = 1;
+		stackgiver->waitcount = 1;
 	}
 }
 
@@ -85,32 +67,48 @@ void	named_ope_push(t_data *stackgiver, t_data *stackreceiver)
 {
 	if (stackgiver->len > 0)
 	{
+		waitpush(stackgiver, stackreceiver, stackreceiver->name);
 		ope_push(stackgiver, stackreceiver);
-		if (stackreceiver->name == 'a')
+		/*if (stackreceiver->name == 'a')
 			write (1, "pa\n", 3);
 		else
-			write (1, "pb\n", 3);
+			write (1, "pb\n", 3);*/
 	}
 }
 
-void	named_ope_rotate(t_data *stack)
+void	named_ope_swap(t_data *stackgiver, t_data *stackreceiver)
 {
-	if (stack->len > 1)
+	if (stackgiver->len > 1)
 	{
-		ope_rotate(stack);
-		if (stack->name == 'a')
+		waitpush(stackgiver, stackreceiver, 'x');
+		ope_swap(stackgiver);
+		if (stackgiver->name == 'a')
+			write (1, "sa\n", 3);
+		else
+			write (1, "sb\n", 3);
+	}
+}
+
+void	named_ope_rotate(t_data *stackgiver, t_data *stackreceiver)
+{
+	if (stackgiver->len > 1)
+	{
+		waitpush(stackgiver, stackreceiver, 'x');
+		ope_rotate(stackgiver);
+		if (stackgiver->name == 'a')
 			write(1, "ra\n", 3);
 		else
 			write(1, "rb\n", 3);
 	}
 }
 
-void	named_ope_revrotate(t_data *stack)
+void	named_ope_revrotate(t_data *stackgiver, t_data *stackreceiver)
 {
-	if (stack->len > 1)
+	if (stackgiver->len > 1)
 	{
-		ope_revrotate(stack);
-		if (stack->name == 'a')
+		waitpush(stackgiver, stackreceiver, 'x');
+		ope_revrotate(stackgiver);
+		if (stackgiver->name == 'a')
 			write(1, "rra\n", 4);
 		else
 			write(1, "rrb\n", 4);
