@@ -21,8 +21,8 @@ void	push_swap(t_data *stacka, t_data *stackb)
 	if (stacka->len >= 4)
 		double_pi_quicksort(stacka, stackb, stacka->len);
 	actualpush(stacka, stackb);
-	if (isstacksort(stacka, stacka->len) != 1 || stackb->len > 0)
-		printf("ceci est un vrai probleme et pas un probleme d'affichage!\n");
+/*	if (isstacksort(stacka, stacka->len) != 1 || stackb->len > 0)
+		printf("ceci est un vrai probleme et pas un probleme d'affichage!\n");*/
 }
 
 void	freestack(t_data *stacka)

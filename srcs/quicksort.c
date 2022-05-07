@@ -11,40 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
-/*
-void	ft_printstacks(t_data *stackone, t_data *stacktwo)
-{
-	t_link *stacka;
-	t_link *stackb;
-
-	if (stackone->name == 'a')
-	{
-		stacka = stackone->first;
-		stackb = stacktwo->first;
-	}
-	else
-	{
-		stacka = stacktwo->first;
-		stackb = stackone->first;
-	}
-	write (1, "stacks first to last\n", 21);
-	while (stacka || stackb)
-	{
-		if (stacka)
-		{
-			ft_putnbr_fd(stacka->num, 1);
-			stacka = stacka->next;
-		}
-		write (1, " | ", 3);
-		if (stackb)
-		{
-			ft_putnbr_fd(stackb->num, 1);
-			stackb = stackb->next;
-		}
-		write (1, "\n", 1);
-	}
-	write (1, "\n", 1);
-}*/
 
 void	pushswappush(t_data *stkgiv, t_data *stkget)
 {
@@ -123,115 +89,6 @@ void	lower_med_quicksort(t_data *stkgiv, t_data *stkget, t_median nextchunk)
 		named_ope_push(stkget, stkgiv);
 }
 
-int med_of_four(t_link *link)
-{
-	long int res1;
-	long int res2;
-	int res3;
-	int i;
-	int j;
-	int *tab;
-	
-	i = 0;
-	tab = malloc(sizeof(int) * 4);
-	while (i < 4)
-	{
-		tab[i] = link->num;
-		link = link->next;
-		i++;
-	}
-	i = 0;
-//	printf("1 = %i 2 = %i 3 = %i 4 = %i\n", tab[0], tab[1], tab[2], tab[3]);
-	while (i < 4)
-	{
-		j = i;
-		while (j < 4)
-		{
-			if (tab[i] > tab[j])
-				swap(&tab[i], &tab[j]);
-			j++;
-		}
-		i++;
-	}
-//	printf("1 = %i 2 = %i 3 = %i 4 = %i\n", tab[0], tab[1], tab[2], tab[3]);
-	res1 = tab[1];
-	res2 = tab[2];
-	res3 = (res1 + res2) / 2;
-	return (res3);
-}
-
-void	chunk_of_four_to_a(t_data *stkgiv, t_data *stkget)
-{
-	int i;
-	int j;
-	int			media;
-
-	j = 0;
-	i = 4;
-	media = med_of_four(stkgiv->first);
-	while (biggerintinstack(media, stkgiv, i) && i--)
-	{
-		if (stkgiv->first->num <= media)
-		{
-			if (i == 1 && isstacksort(stkgiv, 2) != 1)
-				named_ope_swap(stkgiv, stkget);
-			else
-			{
-				j++;
-				named_ope_rotate(stkgiv, stkget);
-			}
-		}
-		else if (stkgiv->first->num > media)
-			named_ope_push(stkgiv, stkget);
-	}
-	while (j--)
-		named_ope_revrotate(stkgiv, stkget);
-	if (isstacksort(stkgiv, 2) != 1 && isstacksort(stkget, 2) != 1)
-		ope_ss(stkget, stkgiv);
-	if (isstacksort(stkgiv, 2) != 1)
-		named_ope_swap(stkgiv, stkget);
-	if (isstacksort(stkget, 2) != 1)
-		named_ope_swap(stkget, stkget);
-	named_ope_push(stkget, stkgiv);
-	named_ope_push(stkget, stkgiv);
-}
-
-void	chunk_of_four_to_b(t_data *stkgiv, t_data *stkget)
-{
-	int i;
-	int j;
-	int			media;
-
-	j = 0;
-	i = 4;
-	media = med_of_four(stkgiv->first);
-	while (smallerintinstack(media, stkgiv, i) && i--)
-	{
-		if (stkgiv->first->num > media)
-		{
-			if (i == 1 && isstacksort(stkgiv, 2) != 1)
-				named_ope_swap(stkgiv, stkget);
-			else
-			{
-				j++;
-				named_ope_rotate(stkgiv, stkget);
-			}
-		}
-		else if (stkgiv->first->num <= media)
-			named_ope_push(stkgiv, stkget);
-	}
-	while (j--)
-		named_ope_revrotate(stkgiv, stkget);
-	if (isstacksort(stkgiv, 2) != 1 && isstacksort(stkget, 2) != 1)
-		ope_ss(stkget, stkgiv);
-	if (isstacksort(stkgiv, 2) != 1)
-		named_ope_swap(stkgiv, stkget);
-	if (isstacksort(stkget, 2) != 1)
-		named_ope_swap(stkget, stkget);
-	named_ope_push(stkget, stkgiv);
-	named_ope_push(stkget, stkgiv);
-}
-
 void	revsorted(t_data *stkgiv, t_data *stkget, unsigned int size)
 {
 
@@ -246,7 +103,7 @@ void	revsorted(t_data *stkgiv, t_data *stkget, unsigned int size)
 	i = size - 2;
 	while (i)
 	{
-		named_ope_rotate(stkget, stkget);
+		named_ope_rotate(stkget, stkgiv);
 		i--;
 	}
 	named_ope_revrotate(stkgiv, stkget);
@@ -254,7 +111,7 @@ void	revsorted(t_data *stkgiv, t_data *stkget, unsigned int size)
 	i = size - 2;
 	while (i)
 	{
-		named_ope_revrotate(stkget, stkget);
+		named_ope_revrotate(stkget, stkgiv);
 		named_ope_push(stkget, stkgiv);
 		i--;
 	}
@@ -284,13 +141,9 @@ void	double_pi_quicksort(t_data *stkgiv, t_data *stkget, unsigned int size)
 		chunk_of_threea(stkgiv, stkget);
 	if (size == 3 && stkgiv->name == 'b' && isstacksort(stkgiv, size) != 1)
 		chunk_of_threeb(stkgiv, stkget);
-	/*if (size > 3 && isstackrevsort(stkgiv, size) == 1)
+	if (size > 3 && isstackrevsort(stkgiv, size) == 1)
 		revsorted(stkgiv, stkget, size);
-	if (size == 4 && stkgiv->name == 'a' && isstacksort(stkgiv, size) != 1)
-		chunk_of_four_to_b(stkgiv, stkget);
-	if (size == 4 && stkgiv->name == 'b' && isstacksort(stkgiv, size) != 1)
-		chunk_of_four_to_a(stkgiv, stkget);*/
-	if (size > 2 && isstacksort(stkgiv, size) != 1)
+	if (size > 3 && isstacksort(stkgiv, size) != 1)
 		nextchunk = push_half(stkgiv, stkget, size);
 	if (isstacksort(stkgiv, size - (nextchunk.a + nextchunk.b)) != 1)
 		double_pi_quicksort(stkgiv, stkget, size - (nextchunk.a + nextchunk.b));
