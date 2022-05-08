@@ -12,17 +12,6 @@
 
 #include "../include/push_swap.h"
 
-int	isstackrevsort(t_data *stack, unsigned int size)
-{
-	if (size == 0 || size == 1)
-		return (1);
-	if (stack->name == 'b')
-		return (issort(stack->first, size));
-	if (stack->name == 'a')
-		return (issortrev(stack->first, size));
-	return (-1);
-}
-
 int	isstacksort(t_data *stack, unsigned int size)
 {
 	if (size == 0 || size == 1)

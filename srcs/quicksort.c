@@ -89,37 +89,6 @@ void	lower_med_quicksort(t_data *stkgiv, t_data *stkget, t_median nextchunk)
 		named_ope_push(stkget, stkgiv);
 }
 
-void	revsorted(t_data *stkgiv, t_data *stkget, unsigned int size)
-{
-
-	unsigned int	i;
-	named_ope_rotate(stkgiv, stkget);
-	i = size - 1;
-	while (i)
-	{
-		named_ope_push(stkgiv, stkget);
-		i--;
-	}
-	i = size - 2;
-	while (i)
-	{
-		named_ope_rotate(stkget, stkgiv);
-		i--;
-	}
-	named_ope_revrotate(stkgiv, stkget);
-	named_ope_push(stkget, stkgiv);
-	i = size - 2;
-	while (i)
-	{
-		named_ope_revrotate(stkget, stkgiv);
-		named_ope_push(stkget, stkgiv);
-		i--;
-	}
-	if (isstacksort(stkgiv, size) != 1)
-		printf("ceci est un probleme\n");
-
-}
-
 void	double_pi_quicksort(t_data *stkgiv, t_data *stkget, unsigned int size)
 {
 	t_median	nextchunk;
@@ -141,8 +110,6 @@ void	double_pi_quicksort(t_data *stkgiv, t_data *stkget, unsigned int size)
 		chunk_of_threea(stkgiv, stkget);
 	if (size == 3 && stkgiv->name == 'b' && isstacksort(stkgiv, size) != 1)
 		chunk_of_threeb(stkgiv, stkget);
-	if (size > 3 && isstackrevsort(stkgiv, size) == 1)
-		revsorted(stkgiv, stkget, size);
 	if (size > 3 && isstacksort(stkgiv, size) != 1)
 		nextchunk = push_half(stkgiv, stkget, size);
 	if (isstacksort(stkgiv, size - (nextchunk.a + nextchunk.b)) != 1)

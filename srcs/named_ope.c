@@ -14,15 +14,8 @@
 
 void	actualpush(t_data *stackgiver, t_data *stackreceiver)
 {
-	if (stackgiver->waitpushto == 'x')
-	{
-		printf("BIG PB3\n");
-		exit (0);
-	}
-	//printf("gatepush, waitcount = %d\n", stackgiver->waitcount);
 	while (stackgiver->waitcount > 0)
 	{
-		//printf("gatepush, waitcount = %d\n", stackgiver->waitcount);
 		if (stackgiver->waitpushto == 'a')
 			write (1, "pa\n", 3);
 		else if (stackgiver->waitpushto == 'b')
@@ -40,28 +33,6 @@ void	waitpush(t_data *stackgiver, t_data *stackreceiver, char order)
 {/*
 	if (stackgiver && stackreceiver && order)
 	{}*/
-	if (stackgiver->waitcount < 0 || (order != 'x' && order != 'a' && order != 'b'))
-	{
-		printf("BIG PB3\n");
-		printf("order = %c, waitp = %c, count = %i", order, stackgiver->waitpushto, stackgiver->waitcount);
-		exit (0);
-	}
-	if (stackgiver->waitpushto == 'x' && stackgiver->waitcount != 0)
-	{
-		printf("BIG PB3\n");
-		printf("order = %c, waitp = %c, count = %i", order, stackgiver->waitpushto, stackgiver->waitcount);
-		exit (0);
-	}
-	if (stackgiver->waitpushto == 'b' && stackgiver->waitcount == 0)
-	{
-		printf("BIG PB\n");
-		exit (0);
-	}
-	if (stackgiver->waitpushto == 'a' && stackgiver->waitcount == 0)
-	{
-		printf("BIG PB2\n");
-		exit (0);
-	}
 	if (order == 'x' && stackgiver->waitcount != 0)
 	{
 		actualpush(stackgiver, stackreceiver);
