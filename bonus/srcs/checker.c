@@ -87,8 +87,8 @@ char	**readcommands(void)
 		return (NULL);
 	if (!checkcommands(res))
 	{
-		write (2, 'Error\n', 6);
-		freetab (res);
+		write (2, "Error\n", 6);
+		ft_freetab (res);
 		return (NULL);
 	}
 	return (res);
@@ -142,10 +142,10 @@ void	checker(t_data *stacka, t_data *stackb)
 		return ;
 	execcommands(stacka, stackb, commands);
 	ft_freetab(commands);
-	if (isstacksort(stacka) == 1 && stackb->len == 0)
-		write(1, 'OK\n', 3);
+	if (isstacksort(stacka, stacka->len) == 1 && stackb->len == 0)
+		write(1, "OK\n", 3);
 	else
-		write(1, 'KO\n', 3);
+		write(1, "KO\n", 3);
 }
 
 void	freestack(t_data *stacka)

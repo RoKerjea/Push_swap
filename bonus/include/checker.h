@@ -1,13 +1,12 @@
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#ifndef checker_H
+# define checker_H
 
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
-# include <errno.h>
 
 typedef struct s_data
 {
@@ -31,19 +30,6 @@ typedef struct s_tabint
 	unsigned int	count;
 	int				*tab;
 }		t_tabint;
-
-typedef struct s_median
-{
-	long int	a;
-	long int	b;
-}		t_median;
-
-typedef struct s_medindex
-{
-	unsigned int	start;
-	unsigned int	res;
-	unsigned int	end;
-}		t_medindex;
 
 /*LIB*/
 
