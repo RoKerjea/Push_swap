@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rokerjea <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/08 18:48:51 by rokerjea          #+#    #+#             */
+/*   Updated: 2022/05/08 18:48:53 by rokerjea         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/checker.h"
 
 char	*readmap(int fd)
@@ -33,10 +45,10 @@ char	*readmap(int fd)
 	return (mapline);
 }
 
-int		checkcommands(char **commands)
+int	checkcommands(char **commands)
 {
 	unsigned int	i;
-	int res;
+	int				res;
 
 	i = 1;
 	res = 1;

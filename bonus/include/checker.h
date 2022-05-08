@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rokerjea <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/08 18:10:16 by rokerjea          #+#    #+#             */
+/*   Updated: 2022/05/08 18:10:22 by rokerjea         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#ifndef checker_H
-# define checker_H
+#ifndef CHECKER_H
+# define CHECKER_H
 
 # include <stdlib.h>
 # include <fcntl.h>
@@ -33,7 +44,7 @@ typedef struct s_tabint
 
 /*LIB*/
 
-long        	ft_atol(const char *str);
+long			ft_atol(const char *str);
 char			**ft_split(char const *s, char c);
 char			*ft_strdup(const char *s1);
 char			*ft_strjoin(char const *s1, char const *s2);
