@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/checker.h"
+
 long	ft_atol(const char *str)
 {
 	long	res;

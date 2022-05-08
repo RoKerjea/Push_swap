@@ -1,40 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atol.c                                          :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rokerjea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/19 17:09:35 by rokerjea          #+#    #+#             */
-/*   Updated: 2022/04/19 17:09:39 by rokerjea         ###   ########.fr       */
+/*   Created: 2022/04/19 17:09:55 by rokerjea          #+#    #+#             */
+/*   Updated: 2022/04/19 17:10:01 by rokerjea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-long	ft_atol(const char *str)
+#include "../include/checker.h"
+
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	long	res;
 	int		i;
-	int		min;
+	int		j;
+	char	*str;
 
 	i = 0;
-	min = 0;
-	res = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
-		|| str[i] == '\v' || str[i] == '\r' || str[i] == '\f')
+	j = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	while (s1[i])
 		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			min = 1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = res * 10;
-		res += str[i] - '0';
-		i++;
-	}
-	if (min == 1)
-		res *= -1;
-	return (res);
+	while (s2[j])
+		j++;
+	str = malloc(sizeof(char) * (i + j + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (s1[i])
+		str[j++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		str[j++] = s2[i++];
+	str[j] = '\0';
+	return (str);
 }

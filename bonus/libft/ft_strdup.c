@@ -1,40 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atol.c                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rokerjea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/19 17:09:35 by rokerjea          #+#    #+#             */
-/*   Updated: 2022/04/19 17:09:39 by rokerjea         ###   ########.fr       */
+/*   Created: 2022/03/25 16:33:28 by rokerjea          #+#    #+#             */
+/*   Updated: 2022/03/25 16:33:31 by rokerjea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-long	ft_atol(const char *str)
+#include "../include/checker.h"
+
+char	*ft_strdup(const char *s1)
 {
-	long	res;
+	char	*s2;
 	int		i;
-	int		min;
 
 	i = 0;
-	min = 0;
-	res = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
-		|| str[i] == '\v' || str[i] == '\r' || str[i] == '\f')
-		i++;
-	if (str[i] == '+' || str[i] == '-')
+	s2 = malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (s2 == NULL)
+		return (NULL);
+	while (s1[i])
 	{
-		if (str[i] == '-')
-			min = 1;
+		s2[i] = s1[i];
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = res * 10;
-		res += str[i] - '0';
-		i++;
-	}
-	if (min == 1)
-		res *= -1;
-	return (res);
+	s2[i] = '\0';
+	return (s2);
 }

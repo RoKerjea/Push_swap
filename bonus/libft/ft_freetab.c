@@ -1,40 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atol.c                                          :+:      :+:    :+:   */
+/*   ft_freetab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rokerjea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/19 17:09:35 by rokerjea          #+#    #+#             */
-/*   Updated: 2022/04/19 17:09:39 by rokerjea         ###   ########.fr       */
+/*   Created: 2022/04/19 17:08:59 by rokerjea          #+#    #+#             */
+/*   Updated: 2022/04/19 17:09:01 by rokerjea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-long	ft_atol(const char *str)
+#include "../include/checker.h"
+
+void	ft_freetab(char **tab)
 {
-	long	res;
-	int		i;
-	int		min;
+	int	i;
 
 	i = 0;
-	min = 0;
-	res = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
-		|| str[i] == '\v' || str[i] == '\r' || str[i] == '\f')
+	while (tab[i])
 		i++;
-	if (str[i] == '+' || str[i] == '-')
+	while (i >= 0)
 	{
-		if (str[i] == '-')
-			min = 1;
-		i++;
+		if (tab[i])
+			free(tab[i]);
+		i--;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		res = res * 10;
-		res += str[i] - '0';
-		i++;
-	}
-	if (min == 1)
-		res *= -1;
-	return (res);
+	free(tab);
 }
