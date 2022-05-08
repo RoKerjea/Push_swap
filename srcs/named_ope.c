@@ -30,41 +30,30 @@ void	actualpush(t_data *stackgiver, t_data *stackreceiver)
 }
 
 void	waitpush(t_data *stackgiver, t_data *stackreceiver, char order)
-{/*
-	if (stackgiver && stackreceiver && order)
-	{}*/
+{
 	if (order == 'x' && stackgiver->waitcount != 0)
-	{
 		actualpush(stackgiver, stackreceiver);
-	}
-	if (order == 'a' || order == 'b')
+	if (order == stackgiver->waitpushto && (order == 'a' || order == 'b'))
 	{
-		if (order == stackgiver->waitpushto)
+		stackreceiver->waitcount++;
+		stackgiver->waitcount++;
+	}
+	if (stackgiver->waitpushto == 'x' && (order == 'a' || order == 'b'))
+	{
+		stackgiver->waitpushto = order;
+		stackreceiver->waitpushto = order;
+		stackreceiver->waitcount = 1;
+		stackgiver->waitcount = 1;
+	}
+	if (order != stackgiver->waitpushto && stackgiver->waitcount > 0
+		&& (order == 'a' || order == 'b'))
+	{
+		stackreceiver->waitcount--;
+		stackgiver->waitcount--;
+		if (stackgiver->waitcount <= 0)
 		{
-			stackreceiver->waitcount++;
-			stackgiver->waitcount++;
-			return ;
-		}
-		if (order != stackgiver->waitpushto && stackgiver->waitcount > 0)
-		{
-			stackreceiver->waitcount--;
-			stackgiver->waitcount--;
-			if (stackgiver->waitcount <= 0)
-			{
-				stackgiver->waitpushto = 'x';
-				stackreceiver->waitpushto = 'x';
-				stackgiver->waitcount = 0;
-				stackreceiver->waitcount = 0;
-			}
-			return ;
-		}
-		if (stackgiver->waitpushto == 'x' && (order == 'a' || order == 'b'))
-		{
-			stackgiver->waitpushto = order;
-			stackreceiver->waitpushto = order;
-			stackreceiver->waitcount = 1;
-			stackgiver->waitcount = 1;
-			return ;
+			stackgiver->waitpushto = 'x';
+			stackreceiver->waitpushto = 'x';
 		}
 	}
 }
@@ -75,10 +64,6 @@ void	named_ope_push(t_data *stackgiver, t_data *stackreceiver)
 	{
 		waitpush(stackgiver, stackreceiver, stackreceiver->name);
 		ope_push(stackgiver, stackreceiver);
-		/*if (stackreceiver->name == 'a')
-			write (1, "pa\n", 3);
-		else if (stackreceiver->name == 'b')
-			write (1, "pb\n", 3);*/
 	}
 }
 
@@ -90,7 +75,7 @@ void	named_ope_swap(t_data *stackgiver, t_data *stackreceiver)
 		ope_swap(stackgiver);
 		if (stackgiver->name == 'a')
 			write (1, "sa\n", 3);
-		else 
+		else
 			write (1, "sb\n", 3);
 	}
 }
@@ -103,7 +88,7 @@ void	named_ope_rotate(t_data *stackgiver, t_data *stackreceiver)
 		ope_rotate(stackgiver);
 		if (stackgiver->name == 'a')
 			write(1, "ra\n", 3);
-		else 
+		else
 			write(1, "rb\n", 3);
 	}
 }

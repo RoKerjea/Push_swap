@@ -64,7 +64,7 @@ unsigned int size, t_median *nextchunk)
 			}
 			else if (stkgiv->len > 1)
 			{
-				count.a++;			
+				count.a++;
 				named_ope_rotate(stkgiv, stkget);
 			}
 		}
@@ -77,7 +77,7 @@ unsigned int size, t_median *nextchunk)
 				{
 					if (stkgiv->first->num < media && stkget->len > 1 && stkgiv->len > 1 && ++count.a)
 						ope_rr(stkgiv, stkget);
-					else if(stkget->len > 1)
+					else if (stkget->len > 1)
 						named_ope_rotate(stkget, stkgiv);
 				}
 			}

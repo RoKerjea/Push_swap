@@ -35,11 +35,15 @@ char	*readmap(int fd)
 		if (!tmp)
 		{
 			free (buffer);
-			free (mapline);
 			return (NULL);
 		}
 		mapline = ft_strdup(tmp);
 		free(tmp);
+		if (!mapline)
+		{
+			free (buffer);
+			return (NULL);
+		}
 	}
 	free (buffer);
 	return (mapline);
@@ -48,41 +52,41 @@ char	*readmap(int fd)
 int	checkcommands(char **commands)
 {
 	unsigned int	i;
-	int				res;
 
-	i = 1;
-	res = 1;
+	i = 0;
 	while (commands[i])
 	{
 		if (commands[i][0] == 'p')
 		{
 			if (commands[i][1] != 'a' && commands[i][1] != 'b')
-				res = 0;
+				return (0);
 			if (commands[i][2] != '\0')
-				res = 0;
+				return (0);
 		}
-		if (commands[i][0] == 's')
+		else if (commands[i][0] == 's')
 		{
-			if (commands[i][1] != 'a' && commands[i][1] != 's' && commands[i][1] != 'b')
-				res = 0;
+			if (commands[i][1] != 'a' && commands[i][1] != 'b' && commands[i][1] != 's')
+				return (0);
 			if (commands[i][2] != '\0')
-				res = 0;
+				return (0);
 		}
-		if (commands[i][0] == 'r')
+		else if (commands[i][0] == 'r')
 		{
-			if (commands[i][1] != 'a' && commands[i][1] != 'r' && commands[i][1] != 'b')
-				res = 0;
+			if (commands[i][1] != 'a' && commands[i][1] != 'b' && commands[i][1] != 'r')
+				return (0);
 			if (commands[i][1] == 'r' && commands[i][2] != '\0')
 			{
 				if (commands[i][2] != 'a' && commands[i][2] != 'r' && commands[i][2] != 'b')
-					res = 0;
+					return (0);
 				if (commands[i][3] != '\0')
-					res = 0;
+					return (0);
 			}
 		}
+		else
+			return (0);
 		i++;
 	}
-	return (res);
+	return (1);
 }
 
 char	**readcommands(void)
@@ -97,7 +101,7 @@ char	**readcommands(void)
 	free (commandline);
 	if (!res)
 		return (NULL);
-	if (!checkcommands(res))
+	if (checkcommands(res) == 0)
 	{
 		write (2, "Error\n", 6);
 		ft_freetab (res);
@@ -150,7 +154,7 @@ void	checker(t_data *stacka, t_data *stackb)
 	char	**commands;
 
 	commands = readcommands();
-	if (!commands)
+	if (commands == NULL)
 		return ;
 	execcommands(stacka, stackb, commands);
 	ft_freetab(commands);
