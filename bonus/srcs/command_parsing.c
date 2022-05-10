@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_parsing.c                                  :+:      :+:    :+:   */
+/*   ope_parsing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rokerjea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -47,63 +47,69 @@ char	*readmap(int fd)
 	return (mapline);
 }
 
-int	checkrcommands(char *command)
+int	check_r_ope(char *ope)
 {
-	if (command[0] == 'r')
+	if (ope[0] == 'r')
 	{
-		if (command[1] != 'a' && command[1] != 'b' && command[1] != 'r')
+		if (ope[1] != 'a' && ope[1] != 'b' && ope[1] != 'r')
 			return (0);
-		if (command[1] == 'r' && command[2] != '\0')
+		if (ope[1] == 'r' && ope[2] != '\0')
 		{
-			if (command[2] != 'a' && command[2] != 'r' && command[2] != 'b')
+			if (ope[2] != 'a' && ope[2] != 'r' && ope[2] != 'b')
 				return (0);
-			if (command[3] != '\0')
+			if (ope[3] != '\0')
 				return (0);
 		}
 	}
 	return (1);
 }
 
-int	checkcommands(char **commands)
+int	check_ope(char **ope)
 {
 	unsigned int	i;
 
 	i = 0;
-	while (commands[i])
+	while (ope[i])
 	{
-		if (commands[i][0] == 'p'
-			&& (commands[i][1] != 'a' && commands[i][1] != 'b'))
+		if (ope[i][0] != 'p' && ope[i][0] != 's' && ope[i][0] != 'r')
 			return (0);
-		else if (commands[i][0] == 'p' && commands[i][2] != '\0')
+		if (ope[i][0] == 'p'
+			&& (ope[i][1] != 'a' && ope[i][1] != 'b'))
 			return (0);
-		else if (commands[i][0] == 's' && (commands[i][1] != 'a'
-			&& commands[i][1] != 'b' && commands[i][1] != 's'))
+		else if (ope[i][0] == 'p' && ope[i][2] != '\0')
 			return (0);
-		else if (commands[i][0] == 's' && commands[i][2] != '\0')
+		else if (ope[i][0] == 's' && (ope[i][1] != 'a'
+			&& ope[i][1] != 'b' && ope[i][1] != 's'))
 			return (0);
-		else if (commands[i][0] == 'r')
-		{
-			if (checkrcommands(commands[i]) == 0)
+		else if (ope[i][0] == 's' && ope[i][2] != '\0')
+			return (0);
+		else if (ope[i][0] == 'r')
+			if (check_r_ope(ope[i]) == 0)
 				return (0);
-		}
 		i++;
 	}
 	return (1);
 }
 
-char	**readcommands(void)
+char	**readope(void)
 {
 	char	**res;
-	char	*commandline;
+	char	*opeline;
 
-	commandline = readmap(0);
-	if (!commandline)
+	opeline = readmap(0);
+	if (!opeline)
 		return (NULL);
-	res = ft_split(commandline, '\n');
-	free (commandline);
+	if (lastchar(opeline) == 0)
+	{
+		free (opeline);
+		write (2, "Error\n", 6);
+		return (NULL);
+	}
+	res = ft_split(opeline, '\n');
+	free (opeline);
 	if (!res)
 		return (NULL);
-	if (checkcommands(res) == 0)
+	if (check_ope(res) == 0)
 	{
 		write (2, "Error\n", 6);
 		ft_freetab (res);

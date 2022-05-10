@@ -54,7 +54,7 @@ void	checker(t_data *stacka, t_data *stackb)
 {
 	char	**commands;
 
-	commands = readcommands();
+	commands = readope();
 	if (commands == NULL)
 		return ;
 	execcommands(stacka, stackb, commands);

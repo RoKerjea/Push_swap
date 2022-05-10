@@ -12,6 +12,19 @@
 
 #include "../include/checker.h"
 
+int	lastchar(char *opeline)
+{
+	int	i;
+
+	i = 0;
+	while (opeline[i])
+		i++;
+	if (opeline[i - 1] == '\n')
+		return (1);
+	else
+		return (0);
+}
+
 int	isstacksort(t_data *stack, unsigned int size)
 {
 	if (size == 0 || size == 1)

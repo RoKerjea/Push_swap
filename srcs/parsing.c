@@ -125,6 +125,8 @@ t_tabint	make_tab_from_input(int argc, char **argv)
 		return (tabres);
 	tabres = atol_table(chartab);
 	ft_freetab(chartab);
+	if (tabres.tab == NULL)
+		return (tabres);
 	if (checkdup(tabres) == -1)
 	{
 		write(2, "Error\n", 6);

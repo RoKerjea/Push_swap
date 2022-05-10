@@ -16,7 +16,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <string.h>
 # include <errno.h>
 
@@ -56,10 +55,17 @@ typedef struct s_medindex
 	unsigned int	end;
 }		t_medindex;
 
+typedef struct s_honte
+{
+	t_median		count;
+	int				media;
+	int				quart;
+	unsigned int	size;
+}		t_honte;
+
 /*LIB*/
 
 long			ft_atol(const char *str);
-void			ft_putnbr_fd(int n, int fd);
 char			**ft_split(char const *s, char c);
 char			*ft_strdup(const char *s1);
 char			*ft_strjoin(char const *s1, char const *s2);
@@ -79,7 +85,6 @@ t_data			mkdata(void);
 
 /*algo.c*/
 
-//void			algo_5(t_data *stacka, t_data *stackb);
 void			algo_3(t_data *stacka, t_data *stackb);
 
 /*push.c*/
@@ -87,6 +92,17 @@ void			algo_3(t_data *stacka, t_data *stackb);
 t_median		push_half(t_data *stkgiv, t_data *stkget, unsigned int size);
 int				smallerintinstack(int median, t_data *stack, unsigned int size);
 int				biggerintinstack(int median, t_data *stack, unsigned int size);
+
+/*push_accessories.c*/
+
+void			push_to_b_keep(t_data *stkgiv, t_data *stkget, t_honte *pardon,
+					t_median *nextchunk);
+void			push_to_b_push(t_data *stkgiv, t_data *stkget, t_honte *pardon,
+					t_median *nextchunk);
+void			push_to_a_keep(t_data *stkgiv, t_data *stkget, t_honte *pardon,
+					t_median *nextchunk);
+void			push_to_a_push(t_data *stkgiv, t_data *stkget, t_honte *pardon,
+					t_median *nextchunk);
 
 /* operation.c*/
 

@@ -16,7 +16,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <string.h>
 
 typedef struct s_data
@@ -54,6 +53,7 @@ unsigned long	ft_strlen(const char *s);
 
 /*sorted.c*/
 
+int				lastchar(char *opeline);
 int				isstacksort(t_data *stack, unsigned int size);
 int				issort(t_link *link, unsigned int size);
 int				issortrev(t_link *link, unsigned int size);
@@ -73,7 +73,7 @@ void			ope_push(t_data *stackgiver, t_data *stackreceiver);
 
 /*command_parsing.c*/
 
-char			**readcommands(void);
+char			**readope(void);
 
 /*parsing.c*/
 
