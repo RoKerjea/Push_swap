@@ -60,7 +60,7 @@ char	**ft_split(char const *s, char c)
 			i++;
 		res[wnum] = malloc(sizeof(char) * (ft_lenword(s, c, i)));
 		if (!(res[wnum]))
-			return (NULL);/*PROTECT BETTER DUMMASS*/
+			return (ft_freetab(res));
 		while (s[i] != c && s[i])
 			res[wnum][j++] = s[i++];
 		res[wnum][j] = '\0';

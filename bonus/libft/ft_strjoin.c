@@ -12,7 +12,17 @@
 
 #include "../include/checker.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin2(char *s1, char const *s2)
+{
+	char	*res;
+
+	res = ft_strjoin(s1, s2);
+	if (ft_strlen(s1) > 1)
+		free(s1);
+	return (res);
+}
+
+char	*ft_strjoin(char *s1, char const *s2)
 {
 	int		i;
 	int		j;

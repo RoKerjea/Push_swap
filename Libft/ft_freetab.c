@@ -12,7 +12,7 @@
 
 #include "../include/push_swap.h"
 
-void	ft_freetab(char **tab)
+char	**ft_freetab(char **tab)
 {
 	int	i;
 
@@ -26,4 +26,5 @@ void	ft_freetab(char **tab)
 		i--;
 	}
 	free(tab);
+	return (NULL);
 }

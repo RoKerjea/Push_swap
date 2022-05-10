@@ -63,7 +63,7 @@ void			ft_putnbr_fd(int n, int fd);
 char			**ft_split(char const *s, char c);
 char			*ft_strdup(const char *s1);
 char			*ft_strjoin(char const *s1, char const *s2);
-void			ft_freetab(char **tab);
+char			**ft_freetab(char **tab);
 unsigned long	ft_strlen(const char *s);
 
 /*sorted.c*/
@@ -98,11 +98,15 @@ void			ope_push(t_data *stackgiver, t_data *stackreceiver);
 
 /*named_ope.c*/
 
-void			actualpush(t_data *stackgiver, t_data *stackreceiver);
 void			named_ope_swap(t_data *stackgiver, t_data *stackreceiver);
 void			named_ope_push(t_data *stackgiver, t_data *stackreceiver);
 void			named_ope_rotate(t_data *stackgiver, t_data *stackreceiver);
 void			named_ope_revrotate(t_data *stackgiver, t_data *stackreceiver);
+
+/*secret_push.c*/
+
+void			waitpush(t_data *stackgiver, t_data *stackreceiver, char order);
+void			actualpush(t_data *stackgiver, t_data *stackreceiver);
 
 /*double_ope.c*/
 

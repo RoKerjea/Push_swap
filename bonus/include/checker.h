@@ -47,8 +47,9 @@ typedef struct s_tabint
 long			ft_atol(const char *str);
 char			**ft_split(char const *s, char c);
 char			*ft_strdup(const char *s1);
-char			*ft_strjoin(char const *s1, char const *s2);
-void			ft_freetab(char **tab);
+char			*ft_strjoin2(char *s1, char const *s2);
+char			*ft_strjoin(char *s1, char const *s2);
+char			**ft_freetab(char **tab);
 unsigned long	ft_strlen(const char *s);
 
 /*sorted.c*/
@@ -69,6 +70,10 @@ void			ope_swap(t_data *datastack);
 void			ope_rotate(t_data *datastack);
 void			ope_revrotate(t_data *datastack);
 void			ope_push(t_data *stackgiver, t_data *stackreceiver);
+
+/*command_parsing.c*/
+
+char			**readcommands(void);
 
 /*parsing.c*/
 

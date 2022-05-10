@@ -12,102 +12,19 @@
 
 #include "../include/checker.h"
 
-char	*readmap(int fd)
+void	execrcommand(t_data *stacka, t_data *stackb, char *command)
 {
-	char	*mapline;
-	char	*tmp;
-	int		count;
-	char	*buffer;
-
-	tmp = NULL;
-	mapline = "\n";
-	count = 1;
-	buffer = (char *)malloc(sizeof(char) * 101);
-	if (!buffer)
-		return (NULL);
-	while (count > 0)
+	if (command[1] == 'a' || (command[1] == 'r' && command[2] == '\0'))
+		ope_rotate(stacka);
+	if (command[1] == 'b' || (command[1] == 'r' && command[2] == '\0'))
+		ope_rotate(stackb);
+	if (command[1] == 'r' && command[2] != '\0')
 	{
-		count = read(fd, buffer, 100);
-		buffer[count] = '\0';
-		tmp = ft_strjoin(mapline, buffer);
-		if (ft_strlen(mapline) > 1)
-			free(mapline);
-		if (!tmp)
-		{
-			free (buffer);
-			return (NULL);
-		}
-		mapline = ft_strdup(tmp);
-		free(tmp);
-		if (!mapline)
-		{
-			free (buffer);
-			return (NULL);
-		}
+		if (command[2] == 'a' || command[2] == 'r')
+			ope_revrotate(stacka);
+		if (command[2] == 'b' || command[2] == 'r')
+			ope_revrotate(stackb);
 	}
-	free (buffer);
-	return (mapline);
-}
-
-int	checkcommands(char **commands)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (commands[i])
-	{
-		if (commands[i][0] == 'p')
-		{
-			if (commands[i][1] != 'a' && commands[i][1] != 'b')
-				return (0);
-			if (commands[i][2] != '\0')
-				return (0);
-		}
-		else if (commands[i][0] == 's')
-		{
-			if (commands[i][1] != 'a' && commands[i][1] != 'b' && commands[i][1] != 's')
-				return (0);
-			if (commands[i][2] != '\0')
-				return (0);
-		}
-		else if (commands[i][0] == 'r')
-		{
-			if (commands[i][1] != 'a' && commands[i][1] != 'b' && commands[i][1] != 'r')
-				return (0);
-			if (commands[i][1] == 'r' && commands[i][2] != '\0')
-			{
-				if (commands[i][2] != 'a' && commands[i][2] != 'r' && commands[i][2] != 'b')
-					return (0);
-				if (commands[i][3] != '\0')
-					return (0);
-			}
-		}
-		else
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-char	**readcommands(void)
-{
-	char	**res;
-	char	*commandline;
-
-	commandline = readmap(0);
-	if (!commandline)
-		return (NULL);
-	res = ft_split(commandline, '\n');
-	free (commandline);
-	if (!res)
-		return (NULL);
-	if (checkcommands(res) == 0)
-	{
-		write (2, "Error\n", 6);
-		ft_freetab (res);
-		return (NULL);
-	}
-	return (res);
 }
 
 void	execcommands(t_data *stacka, t_data *stackb, char **commands)
@@ -117,34 +34,18 @@ void	execcommands(t_data *stacka, t_data *stackb, char **commands)
 	i = 0;
 	while (commands[i])
 	{
-		if (commands[i][0] == 'p')
-		{
-			if (commands[i][1] == 'a')
-				ope_push(stackb, stacka);
-			else
-				ope_push(stacka, stackb);
-		}
-		if (commands[i][0] == 's')
-		{
-			if (commands[i][1] == 'a' || commands[i][1] == 's')
-				ope_swap(stacka);
-			if (commands[i][1] == 'b' || commands[i][1] == 's')
-				ope_swap(stackb);
-		}
+		if (commands[i][0] == 'p' && commands[i][1] == 'a')
+			ope_push(stackb, stacka);
+		else if (commands[i][0] == 'p' && commands[i][1] == 'b')
+			ope_push(stacka, stackb);
+		if (commands[i][0] == 's'
+			&& (commands[i][1] == 'a' || commands[i][1] == 's'))
+			ope_swap(stacka);
+		if (commands[i][0] == 's'
+			&& (commands[i][1] == 'b' || commands[i][1] == 's'))
+			ope_swap(stackb);
 		if (commands[i][0] == 'r')
-		{
-			if (commands[i][1] == 'a' || (commands[i][1] == 'r' && commands[i][2] == '\0'))
-				ope_rotate(stacka);
-			if (commands[i][1] == 'b' || (commands[i][1] == 'r' && commands[i][2] == '\0'))
-				ope_rotate(stackb);
-			if (commands[i][1] == 'r' && commands[i][2] != '\0')
-			{
-				if (commands[i][2] == 'a' || commands[i][2] == 'r')
-					ope_revrotate(stacka);
-				if (commands[i][2] == 'b' || commands[i][2] == 'r')
-					ope_revrotate(stackb);
-			}
-		}
+			execrcommand(stacka, stackb, commands[i]);
 		i++;
 	}
 }
