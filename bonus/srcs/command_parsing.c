@@ -53,6 +53,8 @@ int	check_r_ope(char *ope)
 	{
 		if (ope[1] != 'a' && ope[1] != 'b' && ope[1] != 'r')
 			return (0);
+		if (ope[1] != 'r' && ope[2] != '\0')
+			return (0);
 		if (ope[1] == 'r' && ope[2] != '\0')
 		{
 			if (ope[2] != 'a' && ope[2] != 'r' && ope[2] != 'b')

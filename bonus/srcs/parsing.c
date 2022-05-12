@@ -40,18 +40,19 @@ int	checkarg(char *str)
 
 	i = 0;
 	j = 0;
+	if (str[i] == '-')
+		i++;
+	while (str[i] == 0)
+		i++;
 	while (str[i])
 	{
-		if ((str[i] < '0' || str[i] > '9') && str[i] != '-')
+		if (str[i] < '0' || str[i] > '9')
 			return (-1);
 		if (str[i] >= '0' && str[i] <= '9')
 			j++;
-		if ((str[i] == '-' && str[i + 1] == '-')
-			|| ((str[i] >= '0' && str[i] <= '9') && str[i + 1] == '-'))
-			return (-1);
 		i++;
 	}
-	if (j == 0)
+	if (j == 0 || j >= 11)
 		return (-1);
 	l = ft_atol(str);
 	if (l < -2147483648 || l > 2147483647)
