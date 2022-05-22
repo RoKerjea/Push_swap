@@ -57,29 +57,29 @@ CFLAGS		= -Wall -Werror -Wextra
 
 ${NAME}:	${OBJECTS}
 	@echo "${_UNDER}${_RED}Creating Executable${_END}"
-	@${CC} -o ${NAME} ${OBJECTS}
 	@echo "${_BOLD}${_GREEN}${CC} -o ${NAME} ${OBJECTS}${_END}"
+	@${CC} -o ${NAME} ${OBJECTS}
 
 -include ${DEPEND}
 
 all:	$(NAME)
 
 %.o: %.c $(HEADER)
-	@$(CC) -MMD -c $< -o $@
 	@echo "${_BOLD}${_BLUE}"$(CC) -MMD -c $< -o $@"${_END}"
+	@$(CC) -MMD -c $< -o $@
 
 #%.d: %.c $(HEADER)
 #	$(CC) -MM -MD -o $@ $<
 
 clean:
 	@echo "${_UNDER}${_RED}Deleting Objects and Dependencies${_END}"
-	@${RM} ${OBJECTS} ${DEPEND}
 	@echo "${_BOLD}${_YELLOW}"${RM} ${OBJECTS} ${DEPEND}"${_END}"
+	@${RM} ${OBJECTS} ${DEPEND}
 
 fclean: clean
 	@echo "${_UNDER}${_RED}Deleting Executable${_END}"
-	@${RM} ${NAME}
 	@echo "${_BOLD}${_RED}"${RM} ${NAME}"${_END}"
+	@${RM} ${NAME}
 
 re:			fclean all
 
