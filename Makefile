@@ -1,3 +1,29 @@
+# This is a minimal set of ANSI/VT100 color codes
+_END=$'\033[0m
+_BOLD=$'\033[1m
+_UNDER=$'\033[4m
+_REV=$'\033[7m
+
+# Colors
+_GREY=$'\033[30m
+_RED=$'\033[31m
+_GREEN=$'\033[32m
+_YELLOW=$'\033[33m
+_BLUE=$'\033[34m
+_PURPLE=$'\033[35m
+_CYAN=$'\033[36m
+_WHITE=$'\033[37m
+
+# Inverted, i.e. colored backgrounds
+_IGREY=$'\033[40m
+_IRED=$'\033[41m
+_IGREEN=$'\033[42m
+_IYELLOW=$'\033[43m
+_IBLUE=$'\033[44m
+_IPURPLE=$'\033[45m
+_ICYAN=$'\033[46m
+_IWHITE=$'\033[47m
+
 SRCS		=	srcs/push_swap.c \
 				srcs/mklst.c \
 				srcs/operation.c \
@@ -27,25 +53,33 @@ NAME		= push_swap
 CC			= gcc $(CFLAGS)
 OBJECTS		= ${TOTAL:.c=.o}
 DEPEND		= ${TOTAL:.c=.d}
-CFLAGS		= -Wall -Werror -Wextra -MMD
+CFLAGS		= -Wall -Werror -Wextra 
 
 ${NAME}:	${OBJECTS}
-	${CC} -o ${NAME} ${OBJECTS}
+	@echo "${_UNDER}${_RED}Creating Executable${_END}"
+	@${CC} -o ${NAME} ${OBJECTS}
+	@echo "${_BOLD}${_GREEN}${CC} -o ${NAME} ${OBJECTS}${_END}"
 
-all:		${NAME}
+-include ${DEPEND}
+
+all:	$(NAME)
 
 %.o: %.c $(HEADER)
-	$(CC) -c $< -o $@
+	@$(CC) -MMD -c $< -o $@
+	@echo "${_BOLD}${_BLUE}"$(CC) -MMD -c $< -o $@"${_END}"
 
 #%.d: %.c $(HEADER)
 #	$(CC) -MM -MD -o $@ $<
 
 clean:
-	${RM} ${OBJECTS} ${DEPEND}
+	@echo "${_UNDER}${_RED}Deleting Objects and Dependencies${_END}"
+	@${RM} ${OBJECTS} ${DEPEND}
+	@echo "${_BOLD}${_YELLOW}"${RM} ${OBJECTS} ${DEPEND}"${_END}"
 
-fclean:
-	${RM} ${OBJECTS} ${DEPEND}
-	${RM} ${NAME}
+fclean: clean
+	@echo "${_UNDER}${_RED}Deleting Executable${_END}"
+	@${RM} ${NAME}
+	@echo "${_BOLD}${_RED}"${RM} ${NAME}"${_END}"
 
 re:			fclean all
 
