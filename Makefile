@@ -45,14 +45,19 @@ LIB			=	Libft/ft_atol.c \
 				Libft/ft_freetab.c \
 				Libft/ft_strjoin.c
 
-TOTAL = $(SRCS) $(LIB)
+#TOTAL = $(SRCS) $(LIB)
 
 HEADER		= include/push_swap.h
 RM			= rm -rf
 NAME		= push_swap
 CC			= gcc $(CFLAGS)
-OBJECTS		= ${TOTAL:.c=.o}
-DEPEND		= ${TOTAL:.c=.d}
+
+OBJECTS_SRC	= ${SRCS:srcs/%.c=srcs/build/%.o}
+DEPEND_SRC	= ${SRCS:srcs/%.c=srcs/build/%.d}
+OBJECTS_LIB	= ${LIB:Libft/%.c=Libft/build/%.o}
+DEPEND_LIB	= ${LIB:Libft/%.c=Libft/build/%.d}
+OBJECTS		= $(OBJECTS_SRC) $(OBJECTS_LIB)
+DEPEND		= $(DEPEND_SRC) $(DEPEND_LIB)
 CFLAGS		= -Wall -Werror -Wextra 
 
 ${NAME}:	${OBJECTS}
@@ -64,7 +69,20 @@ ${NAME}:	${OBJECTS}
 
 all:	$(NAME)
 
-%.o: %.c $(HEADER)
+srcs/build/%.o: srcs/%.c $(HEADER)
+	@if [ ! -d "./srcs/build" ]; then\
+		echo "${_UNDER}${_RED}Creating Objects and Dependencies${_END}";\
+		echo "${_BOLD}${_UNDER}${_BLUE}"mkdir -p srcs/build"${_END}";\
+		mkdir -p srcs/build;\
+	fi
+	@echo "${_BOLD}${_BLUE}"$(CC) -MMD -c $< -o $@"${_END}"
+	@$(CC) -MMD -c $< -o $@
+
+Libft/build/%.o: Libft/%.c $(HEADER)
+	@if [ ! -d "./Libft/build" ]; then\
+		echo "${_BOLD}${_UNDER}${_BLUE}"mkdir -p Libft/build"${_END}";\
+		mkdir -p Libft/build;\
+	fi
 	@echo "${_BOLD}${_BLUE}"$(CC) -MMD -c $< -o $@"${_END}"
 	@$(CC) -MMD -c $< -o $@
 
@@ -75,6 +93,10 @@ clean:
 	@echo "${_UNDER}${_RED}Deleting Objects and Dependencies${_END}"
 	@echo "${_BOLD}${_YELLOW}"${RM} ${OBJECTS} ${DEPEND}"${_END}"
 	@${RM} ${OBJECTS} ${DEPEND}
+	@echo "${_BOLD}${_YELLOW}"${RM} srcs/build"${_END}"
+	@${RM} srcs/build
+	@echo "${_BOLD}${_YELLOW}"${RM} Libft/build"${_END}"
+	@${RM} Libft/build
 
 fclean: clean
 	@echo "${_UNDER}${_RED}Deleting Executable${_END}"
