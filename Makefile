@@ -109,30 +109,24 @@ gitm: fclean
 	git push
 
 VER_H = include/Version_pushswap.h
-#CURRENT := $( awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]" )
-#COM := $(expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1)
-
 USER := $(shell env | grep USER | tail --bytes=+6)
 TIME=$(shell date +"%d %m %Y %Hh%M %Z")
 #MIN_VER := $(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1)
 MAJ_VER ?= $(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]"))
 
-MIN_VER1=$(shell awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]" )
-MIN_VER=$(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1
-
-MIN:sh = expr $(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1
-$(COMMAND): $$(@:=.c)
 
 test :
-	@echo $(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1)
-#	awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]"
-	echo ${MIN}
-#	sed -i 's/#define MINOR_VERSION .*/#define MINOR_VERSION \"$(MIN_VER)\"/' $(VER_H)
-#	sed -i 's/#define BUILD_DATE .*/#define BUILD_DATE $(TIME)/' $(VER_H)
+	$(eval MIN=$(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1))
+	sed -i 's/#define MINOR_VERSION .*/#define MINOR_VERSION \"$(MIN)\"/' $(VER_H)
+	sed -i 's/#define BUILD_DATE .*/#define BUILD_DATE $(TIME)/' $(VER_H)
 
 git: fclean
+	$(eval MIN=$(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1))
+	$(eval MAJ=$(shell expr $$(awk '/#define MAJOR_VERSION/' $(VER_H) | tr -cd "[0-9]")))
+	sed -i 's/#define MINOR_VERSION .*/#define MINOR_VERSION \"$(MIN)\"/' $(VER_H)
+	sed -i 's/#define BUILD_DATE .*/#define BUILD_DATE $(TIME)/' $(VER_H)
 	git add .
-	git commit -m "by $(USER) at $(TIME)"
+	git commit -m "V$(MAJ).$(MIN) by $(USER) at $(TIME)"
 	git push
 
 re:			fclean all
