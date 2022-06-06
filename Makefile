@@ -111,14 +111,6 @@ gitm: fclean
 VER_H = include/Version_pushswap.h
 USER := $(shell env | grep USER | tail --bytes=+6)
 TIME=$(shell date +"%d %m %Y %Hh%M %Z")
-#MIN_VER := $(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1)
-MAJ_VER ?= $(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]"))
-
-
-test :
-	$(eval MIN=$(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1))
-	sed -i 's/#define MINOR_VERSION .*/#define MINOR_VERSION \"$(MIN)\"/' $(VER_H)
-	sed -i 's/#define BUILD_DATE .*/#define BUILD_DATE $(TIME)/' $(VER_H)
 
 git: fclean
 	$(eval MIN=$(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1))
