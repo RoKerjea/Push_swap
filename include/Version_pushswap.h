@@ -1,0 +1,3 @@
+#define MAJOR_VERSION "0"
+#define MINOR_VERSION "6"
+#define BUILD_DATE "06 06 2022 19h50 CEST"
