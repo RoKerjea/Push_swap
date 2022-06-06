@@ -120,10 +120,13 @@ MAJ_VER ?= $(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9
 MIN_VER1=$(shell awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]" )
 MIN_VER=$(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1
 
+MIN:sh = expr $(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1
+$(COMMAND): $$(@:=.c)
+
 test :
 	@echo $(shell expr $$(awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]") + 1)
 #	awk '/#define MINOR_VERSION/' $(VER_H) | tr -cd "[0-9]"
-	echo ${MIN_VER1}
+	echo ${MIN}
 #	sed -i 's/#define MINOR_VERSION .*/#define MINOR_VERSION \"$(MIN_VER)\"/' $(VER_H)
 #	sed -i 's/#define BUILD_DATE .*/#define BUILD_DATE $(TIME)/' $(VER_H)
 
